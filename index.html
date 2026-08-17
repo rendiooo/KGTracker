@@ -264,15 +264,13 @@
   }
   .ingredient-list li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--series-matija); flex-shrink: 0; }
 
-  .dish-image { width: 168px; height: 168px; margin: 0 auto 14px; border-radius: 16px; overflow: hidden; background: var(--page); border: 1px solid var(--border); }
   .meal-option-list { display: flex; flex-direction: column; gap: 8px; }
   .meal-option {
     display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; cursor: pointer;
-    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px;
     font-family: inherit; transition: border-color .15s, box-shadow .15s;
   }
   .meal-option:hover { border-color: var(--series-matija); box-shadow: 0 2px 10px rgba(11,11,11,0.06); }
-  .meal-option .thumb { width: 48px; height: 48px; border-radius: 10px; overflow: hidden; background: var(--page); border: 1px solid var(--border); flex-shrink: 0; }
   .meal-option .meta { display: flex; flex-direction: column; gap: 2px; }
   .meal-option .meta strong { font-size: 13px; color: var(--text-primary); }
   .meal-option .meta span { font-size: 11.5px; color: var(--text-muted); }
@@ -285,15 +283,6 @@
     content: counter(step); flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--series-matija);
     color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center;
   }
-
-  /* Kalorije — kamera */
-  .camera-drop {
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-    border: 2px dashed var(--border); border-radius: 14px; padding: 32px 16px; text-align: center; color: var(--text-muted);
-  }
-  .camera-preview { width: 100%; max-height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; }
-  .food-log-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
-  .food-log-row { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--text-secondary); background: var(--page); border-radius: 8px; padding: 7px 10px; }
 
   /* Sync / loading stanja (Firestore) */
   .sync-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; color: var(--text-muted); font-size: 13px; text-align: center; padding: 24px; }
@@ -329,6 +318,12 @@
 <script>
 (function () {
   "use strict";
+
+  /* =========================================================================
+   * VERZIJA APLIKACIJE — ručno se povećava svaki put kad se generira nova
+   * datoteka, da se na telefonu odmah vidi je li novi upload stvarno "uhvatio".
+   * =======================================================================*/
+  var APP_VERSION = "1.0";
 
   /* =========================================================================
    * ICONS
@@ -749,56 +744,6 @@
     });
   }
 
-  // Stilizirana ilustracija tanjura (kako bi jelo trebalo izgledati) — generirana
-  // parametarski iz odabranog mesa i priloga. Draft zamjena za pravu AI sliku
-  // dok backend/API za generiranje slika nije spojen.
-  var PROTEIN_TONES = {
-    piletina: { main: "#e0b374", dark: "#c99a5c" },
-    teletina: { main: "#d3937c", dark: "#b97862" },
-    svinjetina: { main: "#dda17f", dark: "#c28563" },
-    junetina: { main: "#a85c40", dark: "#8c4830" },
-    govedina: { main: "#8f4a35", dark: "#73392a" }
-  };
-  var PRILOG_TONES = { riza: "#f5efdd", krumpir: "#e0a857", palenta: "#eec84c", tjestenina: "#eddcae" };
-
-  function dishImageSVG(proteinKey, prilogKey) {
-    var pc = PROTEIN_TONES[proteinKey] || PROTEIN_TONES.piletina;
-    var sc = PRILOG_TONES[prilogKey] || PRILOG_TONES.riza;
-    var sideShape = "";
-    if (prilogKey === "riza") {
-      var grains = "";
-      for (var i = 0; i < 14; i++) {
-        var gx = 55 + (i % 5) * 9 + (i % 3);
-        var gy = 118 + Math.floor(i / 5) * 10;
-        grains += '<ellipse cx="' + gx + '" cy="' + gy + '" rx="5" ry="3" fill="' + sc + '" stroke="#e4dcc4" stroke-width="0.5" transform="rotate(' + (i * 13 % 40 - 20) + ' ' + gx + ' ' + gy + ')"/>';
-      }
-      sideShape = grains;
-    } else if (prilogKey === "krumpir") {
-      sideShape =
-        '<ellipse cx="62" cy="128" rx="15" ry="9" fill="' + sc + '" stroke="#b8863f" stroke-width="1" transform="rotate(-10 62 128)"/>' +
-        '<ellipse cx="82" cy="140" rx="15" ry="9" fill="' + sc + '" stroke="#b8863f" stroke-width="1" transform="rotate(8 82 140)"/>' +
-        '<ellipse cx="105" cy="132" rx="15" ry="9" fill="' + sc + '" stroke="#b8863f" stroke-width="1" transform="rotate(-4 105 132)"/>';
-    } else if (prilogKey === "palenta") {
-      sideShape = '<path d="M55 132 Q100 102 148 130 Q146 152 100 158 Q55 152 55 132Z" fill="' + sc + '" stroke="#d4ac2e" stroke-width="1"/>';
-    } else {
-      sideShape =
-        '<path d="M55 138 C68 118,88 152,102 128" stroke="' + sc + '" stroke-width="9" fill="none" stroke-linecap="round"/>' +
-        '<path d="M75 145 C90 122,108 150,120 122" stroke="' + sc + '" stroke-width="9" fill="none" stroke-linecap="round"/>' +
-        '<path d="M100 140 C115 120,130 148,145 126" stroke="' + sc + '" stroke-width="9" fill="none" stroke-linecap="round"/>';
-    }
-    return (
-      '<svg viewBox="0 0 200 200" width="100%" height="100%" role="img" aria-label="Ilustracija jela">' +
-        '<circle cx="100" cy="100" r="92" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="2"/>' +
-        '<circle cx="100" cy="100" r="80" fill="#ffffff" stroke="#eceae3" stroke-width="1"/>' +
-        sideShape +
-        '<ellipse cx="112" cy="92" rx="40" ry="25" fill="' + pc.main + '" stroke="' + pc.dark + '" stroke-width="2" transform="rotate(-14 112 92)"/>' +
-        '<ellipse cx="118" cy="86" rx="22" ry="10" fill="' + pc.dark + '" opacity="0.35" transform="rotate(-14 118 86)"/>' +
-        '<path d="M58 168 q9 -15 23 -7 q7 8 -3 12 q-14 5 -20 -5Z" fill="#3f7d3f"/>' +
-        '<path d="M64 166 q5 -8 12 -5" stroke="#2d5e2d" stroke-width="1.5" fill="none"/>' +
-      "</svg>"
-    );
-  }
-
   /* =========================================================================
    * STATE — dva odvojena računa. Firestore (accounts/matija, accounts/matea)
    * je izvor istine i drži podatke trajno; state.accounts je lokalna kopija
@@ -810,8 +755,8 @@
 
   var state = {
     accounts: {
-      matija: { id: "matija", name: "Matija", color: "var(--series-matija)", setup: null, entries: [], foodLog: [] },
-      matea: { id: "matea", name: "Matea", color: "var(--series-matea)", setup: null, entries: [], foodLog: [] }
+      matija: { id: "matija", name: "Matija", color: "var(--series-matija)", setup: null, entries: [] },
+      matea: { id: "matea", name: "Matea", color: "var(--series-matea)", setup: null, entries: [] }
     },
     currentAccountId: null,
     sidebarOpen: false,
@@ -826,9 +771,6 @@
     mealOptions: null,
     mealOptionsMeta: null,
     lastMeal: null,
-    cameraModalOpen: false,
-    cameraPhoto: null,
-    cameraEstimate: null,
     syncReady: false,
     syncError: null
   };
@@ -876,7 +818,6 @@
             var acc = state.accounts[accId];
             acc.setup = data.setup || null;
             acc.entries = data.entries || [];
-            acc.foodLog = data.foodLog || [];
             state.syncError = null;
             render();
           },
@@ -912,25 +853,10 @@
   var NAV_ITEMS = [
     { id: "dashboard", label: "Dashboard", icon: "home" },
     { id: "profil", label: "Profil", icon: "user" },
-    { id: "kalorije", label: "Kalorije", icon: "plus", clickAction: "open-camera" },
+    { id: "unos", label: "Unos", icon: "plus", clickAction: "open-new-entry" },
     { id: "povijest", label: "Povijest", icon: "history" },
     { id: "jelovnik", label: "Jelovnik", icon: "meal" }
   ];
-
-  // Simulirana "AI" procjena kalorija sa slike tanjura — draft verzija bez
-  // stvarnog computer vision modela. Kad spojimo pravi AI (vision API preko
-  // backenda), ova funkcija se zamijeni stvarnom analizom slike; ostatak
-  // (popup, dnevni zbroj) ostaje isti.
-  function simulateFoodAnalysis() {
-    function rand(min, max) { return Math.round(min + Math.random() * (max - min)); }
-    return {
-      kcal: rand(350, 850),
-      protein: rand(15, 55),
-      carbs: rand(20, 90),
-      fat: rand(10, 40),
-      salt: +(0.5 + Math.random() * 2.5).toFixed(1)
-    };
-  }
 
   /* =========================================================================
    * RENDER: Header
@@ -948,7 +874,7 @@
         '<div class="brand">' +
           left +
           '<div class="brand-badge">' + icon("scale", 18) + "</div>" +
-          '<div><h1>KGTracker</h1><p>Zajedničko praćenje napretka</p></div>' +
+          '<div><h1>KGTracker</h1><p>Zajedničko praćenje napretka · ' + APP_VERSION + "</p></div>" +
         "</div>" +
         right +
       "</div></header>"
@@ -1297,7 +1223,6 @@
       detailHtml =
         '<section class="card">' +
           (state.mealOptions ? '<button class="btn-secondary" data-action="back-to-meal-options" style="margin-bottom:16px">← Natrag na popis jela</button>' : "") +
-          '<div class="dish-image">' + dishImageSVG(m.protein, m.prilog) + "</div>" +
           "<h2 style=\"text-align:center\">" + d.name + "</h2>" +
           '<p class="muted" style="margin:0 0 14px;text-align:center">' + proteinLabel(m.protein) + " + " + prilogLabel(m.prilog) + " — količine za 2 osobe</p>" +
           '<div class="stats-grid" style="margin-bottom:16px">' +
@@ -1310,14 +1235,13 @@
           '<ul class="ingredient-list" style="margin-bottom:16px">' + d.ingredients.map(function (i) { return "<li>" + i + "</li>"; }).join("") + "</ul>" +
           '<p class="wizard-section-label">Priprema</p>' +
           '<ol class="steps-list">' + d.steps.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol>" +
-          '<p class="modal-note" style="margin-top:16px">Ilustracija i nutritivne vrijednosti su draft procjene (unaprijed pripremljene), ne stvarna AI generirana fotografija — ta funkcionalnost dolazi kad spojimo pravi backend.</p>' +
+          '<p class="modal-note" style="margin-top:16px">Nutritivne vrijednosti su draft procjene (unaprijed pripremljene) — precizne vrijednosti dolaze kad spojimo pravi backend.</p>' +
         "</section>";
     } else if (state.mealOptions && state.mealOptionsMeta) {
       var meta = state.mealOptionsMeta;
       var options = state.mealOptions.map(function (opt, idx) {
         return (
           '<button class="meal-option" data-action="select-dish" data-id="' + idx + '">' +
-            '<span class="thumb">' + dishImageSVG(meta.protein, meta.prilog) + "</span>" +
             '<span class="meta"><strong>' + opt.name + '</strong><span>' + opt.kcal + " kcal · " + opt.protein + "P / " + opt.carbs + "UH / " + opt.fat + "M g (po osobi)</span></span>" +
           "</button>"
         );
@@ -1338,74 +1262,6 @@
       "</section>" +
       listHtml +
       detailHtml
-    );
-  }
-
-  /* =========================================================================
-   * RENDER: Kalorije — dnevni unos hrane (Dashboard kartica)
-   * =======================================================================*/
-  function renderFoodLogCard(acc) {
-    var today = todayISO();
-    var todays = (acc.foodLog || []).filter(function (e) { return e.date === today; });
-    var totals = todays.reduce(function (t, e) {
-      t.kcal += e.kcal; t.protein += e.protein; t.carbs += e.carbs; t.fat += e.fat; t.salt += e.salt;
-      return t;
-    }, { kcal: 0, protein: 0, carbs: 0, fat: 0, salt: 0 });
-
-    var listHtml = todays.length
-      ? '<div class="food-log-list">' + todays.map(function (e) {
-          return '<div class="food-log-row"><span>' + e.time + "</span><span>" + e.kcal + " kcal · " + e.protein + "P / " + e.carbs + "UH / " + e.fat + "M g</span></div>";
-        }).join("") + "</div>"
-      : '<p class="muted" style="margin-top:10px">Još nema unosa hrane danas. Klikni + za dodavanje.</p>';
-
-    return (
-      '<section class="card">' +
-        "<h2>Dnevni unos hrane (danas)</h2>" +
-        '<div class="stats-grid">' +
-          '<div class="stat-tile"><p class="stat-label">Kalorije</p><span class="stat-value">' + totals.kcal + " kcal</span></div>" +
-          '<div class="stat-tile"><p class="stat-label">Proteini</p><span class="stat-value">' + totals.protein + " g</span></div>" +
-          '<div class="stat-tile"><p class="stat-label">Ugljikohidrati</p><span class="stat-value">' + totals.carbs + " g</span></div>" +
-          '<div class="stat-tile"><p class="stat-label">Masti</p><span class="stat-value">' + totals.fat.toFixed(0) + " g</span></div>" +
-        "</div>" +
-        '<p class="muted" style="margin-top:8px">Sol: ' + totals.salt.toFixed(1) + " g</p>" +
-        listHtml +
-      "</section>"
-    );
-  }
-
-  function renderCameraModal() {
-    if (!state.cameraModalOpen) return "";
-    var body;
-    if (state.cameraEstimate) {
-      var est = state.cameraEstimate;
-      body =
-        (state.cameraPhoto ? '<img class="camera-preview" src="' + state.cameraPhoto + '" alt="Fotografija tanjura" />' : "") +
-        '<div class="stats-grid" style="margin-bottom:10px">' +
-          '<div class="stat-tile"><p class="stat-label">Kalorije</p><span class="stat-value">' + est.kcal + " kcal</span></div>" +
-          '<div class="stat-tile"><p class="stat-label">Proteini</p><span class="stat-value">' + est.protein + " g</span></div>" +
-          '<div class="stat-tile"><p class="stat-label">Ugljikohidrati</p><span class="stat-value">' + est.carbs + " g</span></div>" +
-          '<div class="stat-tile"><p class="stat-label">Masti</p><span class="stat-value">' + est.fat + " g</span></div>" +
-        "</div>" +
-        '<p class="muted" style="margin-bottom:14px">Procijenjena sol: ' + est.salt + " g</p>" +
-        '<button class="btn-primary" style="width:100%;margin-bottom:8px" data-action="confirm-food-entry">' + icon("check", 16) + "Spremi u dnevni unos</button>" +
-        '<button class="btn-secondary" style="width:100%" data-action="retake-photo">' + icon("camera", 15) + "Slikaj ponovno</button>" +
-        '<p class="modal-note">AI procjena je draft simulacija (nasumične, ali realistične vrijednosti) — stvarna analiza fotografije dolazi kad spojimo pravi vision AI backend.</p>';
-    } else {
-      body =
-        '<label class="camera-drop" for="camera-file-input">' +
-          icon("camera", 28) +
-          '<span>Klikni za fotografiranje tanjura</span>' +
-        "</label>" +
-        '<input type="file" accept="image/*" capture="environment" id="camera-file-input" style="display:none" />';
-    }
-    return (
-      '<div class="modal-backdrop" data-action="close-camera">' +
-        '<div class="modal" data-action="noop">' +
-          '<div class="modal-head"><h2>Kalorije — slikaj tanjur</h2><button class="icon-btn" data-action="close-camera" aria-label="Zatvori">' + icon("x", 17) + "</button></div>" +
-          '<p class="modal-sub">AI procjenjuje kalorije i makronutrijente s fotografije</p>' +
-          body +
-        "</div>" +
-      "</div>"
     );
   }
 
@@ -1479,8 +1335,7 @@
     return (
       renderTrendChart(acc) +
       '<div class="grid-2">' + renderGoals(acc) + renderStats(acc) + "</div>" +
-      renderMeasurements(acc) +
-      renderFoodLogCard(acc)
+      renderMeasurements(acc)
     );
   }
 
@@ -1522,8 +1377,7 @@
           '<main class="wrap with-bottom-nav">' + renderTabContent(acc) + "</main>" +
           renderBottomNav() +
           renderNewEntryModal(acc) +
-          renderMealModal() +
-          renderCameraModal();
+          renderMealModal();
       }
       document.getElementById("app").innerHTML = renderHeader() + body + renderSyncBadge();
     } catch (err) {
@@ -1643,8 +1497,8 @@
       if (!confirm("Resetirati ovaj račun (trajno briše setup i sve unose iz baze)?")) return;
       var accId = state.currentAccountId;
       var acc = state.accounts[accId];
-      state.accounts[accId] = { id: accId, name: acc.name, color: acc.color, setup: null, entries: [], foodLog: [] };
-      saveAccount(accId, { setup: null, entries: [], foodLog: [] });
+      state.accounts[accId] = { id: accId, name: acc.name, color: acc.color, setup: null, entries: [] };
+      saveAccount(accId, { setup: null, entries: [] });
       state.sidebarOpen = false;
       render();
     } else if (action === "open-new-entry") {
@@ -1686,52 +1540,7 @@
     } else if (action === "back-to-meal-options") {
       state.lastMeal = null;
       render();
-    } else if (action === "open-camera") {
-      state.cameraModalOpen = true;
-      state.cameraPhoto = null;
-      state.cameraEstimate = null;
-      state.sidebarOpen = false;
-      render();
-    } else if (action === "close-camera") {
-      state.cameraModalOpen = false;
-      render();
-    } else if (action === "retake-photo") {
-      state.cameraPhoto = null;
-      state.cameraEstimate = null;
-      render();
-    } else if (action === "confirm-food-entry") {
-      var accFood = currentAccount();
-      if (accFood && state.cameraEstimate) {
-        var now = new Date();
-        var e2 = state.cameraEstimate;
-        var newFoodEntry = {
-          id: uid(),
-          date: todayISO(),
-          time: (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes(),
-          kcal: e2.kcal, protein: e2.protein, carbs: e2.carbs, fat: e2.fat, salt: e2.salt
-        };
-        accFood.foodLog.push(newFoodEntry);
-        saveAccount(accFood.id, { foodLog: arrayUnion(newFoodEntry) });
-      }
-      state.cameraModalOpen = false;
-      state.cameraPhoto = null;
-      state.cameraEstimate = null;
-      render();
     }
-  });
-
-  // Slikanje/odabir fotografije tanjura → simulirana AI procjena
-  app.addEventListener("change", function (e) {
-    if (!e.target || e.target.id !== "camera-file-input") return;
-    var file = e.target.files && e.target.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function (ev) {
-      state.cameraPhoto = ev.target.result;
-      state.cameraEstimate = simulateFoodAnalysis();
-      render();
-    };
-    reader.readAsDataURL(file);
   });
 
   // Tooltip za graf
