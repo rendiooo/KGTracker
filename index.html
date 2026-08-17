@@ -8,6 +8,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="KGTracker" />
+<!-- Preconnect na Firebase domene — spaja se unaprijed dok se ostatak stranice
+     tek učitava, umjesto da čeka da se skripta pojavi pa tek onda otvori vezu. -->
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://firestore.googleapis.com" />
+<link rel="preconnect" href="https://identitytoolkit.googleapis.com" />
+<link rel="dns-prefetch" href="https://www.gstatic.com" />
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEHElEQVR4nO3dUW4TSxCG0QSxGZINhhWwQsh2eLAUoci/cTzdPVUz5zwiXeOUvlT3TWzz/PL25wmu+bb3E6AucRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg+j73k+ghN+/flz989ef74ufSSk2B5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiInmf8kxrpVXfMM+MVjTYHkTiIxEEkDiJxEImDSBxEU37Ocdvtn4Ls8g7ECm+HLDgWm4NIHETiIFodx39/7XLO38vUHIvNQSQOoqVx3Lkbz3aylB2LzUG0cxyvP99P/rlbVxUZi81BtC6OLx2Z57l2VB6LzUG0Zxwfx2qF87WOOmOxOYgWxfHAYXmGa0fxsdgcRLvF8elA3f18LaLUWFbE8fAmPPbJUn8sjhWifeK4ui2dLNXGYnMQTY9j4wF51GtHi7HYHEQ7xHHjED3ztaPgWGwOorlxDDkaj3ft6DIWm4NodRz/PT7Pee2oOZaJcQzce0c6WRqNxbFCtDSOO3fj2U6WsmOxOYhmxTH8ODzGtaPXWGwOonVxfOnIPM+1o/JYpsQxadd1P1najcWxQrQojgf24RlOluJjsTmIxscx9WbQ99rRcSw2B9GKOB4+Jo997ag/FpuDaHAcC+4EHa8dTcdicxBNj2PjAXnUa0eLsYyMY9nC73Wy9B2LY4VobhxDtt/xTpYuY7E5iIbFsfge0OXa0XosNgfRxDgGHopHunY0GovNQTQmjl1uAPWvHd3HYnMQzYpj+HF4jGtHr7EMiGPH9V75ZDnAWBwrRFPimLTrup8s7cZicxBtjWP3U3/3J3DV7s9qyBOwOYjGxzH1ZtD32tFxLDYH0aY4dj9ZL4o8jQ9Fns/2p2FzED2/vP3Z/igfka65Ewz/69I32cbH7z6W70Me5fJsVq7TFjfT7mMZszm6m7Q5unPnIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg2jMi32uvh5i+Ish1vwtA3Ufi81BJA4icRCNiePqCTf2hbXtLhxP/cdicxDNjWPUd0mR95CN0mUsw+JIq2z7F9D6fQOtx7LiWNkyiIPtjH/VH8vIOG40+9gXc+O/arE2LvqOZcxPSO9x+ZLufPYHXhifVB7L+LdD3vkFbPnfvEZr40PHsUx5r+zUwDuWcdFuLJ0+anLqIy/QbixtPt560mMu1mss0z+CYcguPUAWn7QYS/V/V3bIIxTUYixLP7zlS98uh2ziqrJj2eeTfY7x063hqo3Fxz4R+ZU9kTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQfQXBKqCsRxJE+IAAAAASUVORK5CYII=" />
 <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEHElEQVR4nO3dUW4TSxCG0QSxGZINhhWwQsh2eLAUoci/cTzdPVUz5zwiXeOUvlT3TWzz/PL25wmu+bb3E6AucRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg+j73k+ghN+/flz989ef74ufSSk2B5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiInmf8kxrpVXfMM+MVjTYHkTiIxEEkDiJxEImDSBxEU37Ocdvtn4Ls8g7ECm+HLDgWm4NIHETiIFodx39/7XLO38vUHIvNQSQOoqVx3Lkbz3aylB2LzUG0cxyvP99P/rlbVxUZi81BtC6OLx2Z57l2VB6LzUG0Zxwfx2qF87WOOmOxOYgWxfHAYXmGa0fxsdgcRLvF8elA3f18LaLUWFbE8fAmPPbJUn8sjhWifeK4ui2dLNXGYnMQTY9j4wF51GtHi7HYHEQ7xHHjED3ztaPgWGwOorlxDDkaj3ft6DIWm4NodRz/PT7Pee2oOZaJcQzce0c6WRqNxbFCtDSOO3fj2U6WsmOxOYhmxTH8ODzGtaPXWGwOonVxfOnIPM+1o/JYpsQxadd1P1najcWxQrQojgf24RlOluJjsTmIxscx9WbQ99rRcSw2B9GKOB4+Jo997ag/FpuDaHAcC+4EHa8dTcdicxBNj2PjAXnUa0eLsYyMY9nC73Wy9B2LY4VobhxDtt/xTpYuY7E5iIbFsfge0OXa0XosNgfRxDgGHopHunY0GovNQTQmjl1uAPWvHd3HYnMQzYpj+HF4jGtHr7EMiGPH9V75ZDnAWBwrRFPimLTrup8s7cZicxBtjWP3U3/3J3DV7s9qyBOwOYjGxzH1ZtD32tFxLDYH0aY4dj9ZL4o8jQ9Fns/2p2FzED2/vP3Z/igfka65Ewz/69I32cbH7z6W70Me5fJsVq7TFjfT7mMZszm6m7Q5unPnIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg2jMi32uvh5i+Ish1vwtA3Ufi81BJA4icRCNiePqCTf2hbXtLhxP/cdicxDNjWPUd0mR95CN0mUsw+JIq2z7F9D6fQOtx7LiWNkyiIPtjH/VH8vIOG40+9gXc+O/arE2LvqOZcxPSO9x+ZLufPYHXhifVB7L+LdD3vkFbPnfvEZr40PHsUx5r+zUwDuWcdFuLJ0+anLqIy/QbixtPt560mMu1mss0z+CYcguPUAWn7QYS/V/V3bIIxTUYixLP7zlS98uh2ziqrJj2eeTfY7x063hqo3Fxz4R+ZU9kTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQfQXBKqCsRxJE+IAAAAASUVORK5CYII=" />
 <style>
@@ -92,9 +98,12 @@
   .sidebar-nav button.active { background: var(--page); color: var(--text-primary); }
   .sidebar-nav button.active svg { color: var(--series-matija); }
 
-  /* Bottom tab bar (mobile) */
+  /* Bottom tab bar (mobile) — visina = 60px sadržaja + dodatni safe-area
+     prostor (home indicator na iPhoneu), tako da safe-area padding NE
+     "jede" prostor ikonicama nego se dodaje preko njih. */
   .bottom-nav {
-    display: none; position: fixed; left: 0; right: 0; bottom: 0; height: 60px; background: var(--surface-1);
+    display: none; position: fixed; left: 0; right: 0; bottom: 0;
+    height: calc(60px + env(safe-area-inset-bottom)); background: var(--surface-1);
     border-top: 1px solid var(--border); align-items: center; justify-content: space-around; z-index: 15;
     padding-bottom: env(safe-area-inset-bottom);
   }
@@ -112,7 +121,7 @@
   .bottom-nav .fab-label { margin-top: 1px; }
 
   main { padding: 24px 0 64px; display: flex; flex-direction: column; gap: 24px; }
-  @media (max-width: 767px) { main.with-bottom-nav { padding-bottom: 88px; } }
+  @media (max-width: 767px) { main.with-bottom-nav { padding-bottom: calc(88px + env(safe-area-inset-bottom)); } }
 
   .card {
     background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px;
@@ -124,8 +133,10 @@
   .field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 500; color: var(--text-secondary); }
   .field input, .field select {
     border: 1px solid var(--border); background: var(--surface-2); border-radius: 8px;
-    padding: 9px 10px; font-size: 13px; color: var(--text-primary); outline: none; font-family: inherit; width: 100%;
+    padding: 9px 10px; font-size: 16px; color: var(--text-primary); outline: none; font-family: inherit; width: 100%;
   }
+  /* font-size mora biti >=16px na inputima — ispod toga iOS Safari
+     automatski zumira stranicu kad korisnik dodirne polje za unos. */
   .field input:focus, .field select:focus { border-color: var(--series-matija); }
   .btn-primary {
     display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -323,7 +334,7 @@
    * VERZIJA APLIKACIJE — ručno se povećava svaki put kad se generira nova
    * datoteka, da se na telefonu odmah vidi je li novi upload stvarno "uhvatio".
    * =======================================================================*/
-  var APP_VERSION = "1.0";
+  var APP_VERSION = "1.1";
 
   /* =========================================================================
    * ICONS
@@ -800,6 +811,12 @@
       // već inicijalizirano — u redu je, samo nastavi
     }
     db = firebase.firestore();
+    // Uključi lokalno IndexedDB predmemoriranje — kod ponovnog otvaranja appa
+    // (isti preglednik/uređaj) podaci se odmah prikažu iz predmemorije dok se
+    // u pozadini sinkronizira sa serverom, umjesto da se svaki put čeka mrežni
+    // odgovor prije prikaza ičega. Ako je otvoreno u više tabova odjednom, ova
+    // značajka se tiho isključi (failed-precondition) — app radi dalje normalno.
+    try { db.enablePersistence({ synchronizeTabs: true }).catch(function () {}); } catch (e) {}
     // Lokalni razvoj/testiranje preko Firebase emulatora (firebase emulators:start) —
     // na pravom hostingu (GitHub Pages i sl.) ovo se nikad ne aktivira.
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
