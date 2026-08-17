@@ -1,0 +1,1766 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>KGTracker</title>
+<meta name="theme-color" content="#2a78d6" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="KGTracker" />
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEHElEQVR4nO3dUW4TSxCG0QSxGZINhhWwQsh2eLAUoci/cTzdPVUz5zwiXeOUvlT3TWzz/PL25wmu+bb3E6AucRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg+j73k+ghN+/flz989ef74ufSSk2B5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiInmf8kxrpVXfMM+MVjTYHkTiIxEEkDiJxEImDSBxEU37Ocdvtn4Ls8g7ECm+HLDgWm4NIHETiIFodx39/7XLO38vUHIvNQSQOoqVx3Lkbz3aylB2LzUG0cxyvP99P/rlbVxUZi81BtC6OLx2Z57l2VB6LzUG0Zxwfx2qF87WOOmOxOYgWxfHAYXmGa0fxsdgcRLvF8elA3f18LaLUWFbE8fAmPPbJUn8sjhWifeK4ui2dLNXGYnMQTY9j4wF51GtHi7HYHEQ7xHHjED3ztaPgWGwOorlxDDkaj3ft6DIWm4NodRz/PT7Pee2oOZaJcQzce0c6WRqNxbFCtDSOO3fj2U6WsmOxOYhmxTH8ODzGtaPXWGwOonVxfOnIPM+1o/JYpsQxadd1P1najcWxQrQojgf24RlOluJjsTmIxscx9WbQ99rRcSw2B9GKOB4+Jo997ag/FpuDaHAcC+4EHa8dTcdicxBNj2PjAXnUa0eLsYyMY9nC73Wy9B2LY4VobhxDtt/xTpYuY7E5iIbFsfge0OXa0XosNgfRxDgGHopHunY0GovNQTQmjl1uAPWvHd3HYnMQzYpj+HF4jGtHr7EMiGPH9V75ZDnAWBwrRFPimLTrup8s7cZicxBtjWP3U3/3J3DV7s9qyBOwOYjGxzH1ZtD32tFxLDYH0aY4dj9ZL4o8jQ9Fns/2p2FzED2/vP3Z/igfka65Ewz/69I32cbH7z6W70Me5fJsVq7TFjfT7mMZszm6m7Q5unPnIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg2jMi32uvh5i+Ish1vwtA3Ufi81BJA4icRCNiePqCTf2hbXtLhxP/cdicxDNjWPUd0mR95CN0mUsw+JIq2z7F9D6fQOtx7LiWNkyiIPtjH/VH8vIOG40+9gXc+O/arE2LvqOZcxPSO9x+ZLufPYHXhifVB7L+LdD3vkFbPnfvEZr40PHsUx5r+zUwDuWcdFuLJ0+anLqIy/QbixtPt560mMu1mss0z+CYcguPUAWn7QYS/V/V3bIIxTUYixLP7zlS98uh2ziqrJj2eeTfY7x063hqo3Fxz4R+ZU9kTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQfQXBKqCsRxJE+IAAAAASUVORK5CYII=" />
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEHElEQVR4nO3dUW4TSxCG0QSxGZINhhWwQsh2eLAUoci/cTzdPVUz5zwiXeOUvlT3TWzz/PL25wmu+bb3E6AucRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg+j73k+ghN+/flz989ef74ufSSk2B5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiInmf8kxrpVXfMM+MVjTYHkTiIxEEkDiJxEImDSBxEU37Ocdvtn4Ls8g7ECm+HLDgWm4NIHETiIFodx39/7XLO38vUHIvNQSQOoqVx3Lkbz3aylB2LzUG0cxyvP99P/rlbVxUZi81BtC6OLx2Z57l2VB6LzUG0Zxwfx2qF87WOOmOxOYgWxfHAYXmGa0fxsdgcRLvF8elA3f18LaLUWFbE8fAmPPbJUn8sjhWifeK4ui2dLNXGYnMQTY9j4wF51GtHi7HYHEQ7xHHjED3ztaPgWGwOorlxDDkaj3ft6DIWm4NodRz/PT7Pee2oOZaJcQzce0c6WRqNxbFCtDSOO3fj2U6WsmOxOYhmxTH8ODzGtaPXWGwOonVxfOnIPM+1o/JYpsQxadd1P1najcWxQrQojgf24RlOluJjsTmIxscx9WbQ99rRcSw2B9GKOB4+Jo997ag/FpuDaHAcC+4EHa8dTcdicxBNj2PjAXnUa0eLsYyMY9nC73Wy9B2LY4VobhxDtt/xTpYuY7E5iIbFsfge0OXa0XosNgfRxDgGHopHunY0GovNQTQmjl1uAPWvHd3HYnMQzYpj+HF4jGtHr7EMiGPH9V75ZDnAWBwrRFPimLTrup8s7cZicxBtjWP3U3/3J3DV7s9qyBOwOYjGxzH1ZtD32tFxLDYH0aY4dj9ZL4o8jQ9Fns/2p2FzED2/vP3Z/igfka65Ewz/69I32cbH7z6W70Me5fJsVq7TFjfT7mMZszm6m7Q5unPnIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg2jMi32uvh5i+Ish1vwtA3Ufi81BJA4icRCNiePqCTf2hbXtLhxP/cdicxDNjWPUd0mR95CN0mUsw+JIq2z7F9D6fQOtx7LiWNkyiIPtjH/VH8vIOG40+9gXc+O/arE2LvqOZcxPSO9x+ZLufPYHXhifVB7L+LdD3vkFbPnfvEZr40PHsUx5r+zUwDuWcdFuLJ0+anLqIy/QbixtPt560mMu1mss0z+CYcguPUAWn7QYS/V/V3bIIxTUYixLP7zlS98uh2ziqrJj2eeTfY7x063hqo3Fxz4R+ZU9kTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQfQXBKqCsRxJE+IAAAAASUVORK5CYII=" />
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface-1: #fcfcfb;
+    --surface-2: #ffffff;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.1);
+    --series-matija: #2a78d6;
+    --series-matea: #eb6834;
+    --good: #0ca30c;
+    --warning: #b8790f;
+    --serious: #c15a36;
+    --critical: #d03b3b;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+  }
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+  header.app-header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(252,252,251,0.92); backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+    padding-top: env(safe-area-inset-top);
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px max(16px, env(safe-area-inset-right)) 14px max(16px, env(safe-area-inset-left));
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-badge {
+    width: 36px; height: 36px; border-radius: 10px; background: var(--series-matija);
+    color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .brand h1 { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.2; }
+  .brand p { margin: 0; font-size: 12px; color: var(--text-muted); line-height: 1.2; }
+  .icon-btn {
+    width: 36px; height: 36px; border-radius: 999px; border: 1px solid var(--border);
+    background: transparent; color: var(--text-secondary); display: flex; align-items: center;
+    justify-content: center; cursor: pointer; flex-shrink: 0;
+  }
+  .icon-btn:hover { background: var(--page); }
+
+  .who-chip { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; }
+  .who-chip .dot { width: 9px; height: 9px; border-radius: 50%; }
+
+  /* Hamburger trigger — desktop only (bottom nav takes over on mobile) */
+  .sidebar-trigger { display: flex; }
+  @media (max-width: 767px) { .sidebar-trigger { display: none; } }
+
+  /* Left sidebar (desktop) */
+  .sidebar-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 35; }
+  .sidebar {
+    position: fixed; top: 0; left: 0; height: 100vh; width: 260px; background: var(--surface-1);
+    border-right: 1px solid var(--border); z-index: 40; display: flex; flex-direction: column;
+    transform: translateX(-100%); transition: transform .2s ease; box-shadow: 4px 0 24px rgba(0,0,0,0.08);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-head { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--border); }
+  .sidebar-nav { padding: 10px; display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-nav button {
+    display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; border: none;
+    background: none; font-family: inherit; font-size: 13.5px; font-weight: 500; color: var(--text-secondary);
+    cursor: pointer; text-align: left; width: 100%;
+  }
+  .sidebar-nav button:hover { background: var(--page); }
+  .sidebar-nav button.active { background: var(--page); color: var(--text-primary); }
+  .sidebar-nav button.active svg { color: var(--series-matija); }
+
+  /* Bottom tab bar (mobile) */
+  .bottom-nav {
+    display: none; position: fixed; left: 0; right: 0; bottom: 0; height: 60px; background: var(--surface-1);
+    border-top: 1px solid var(--border); align-items: center; justify-content: space-around; z-index: 15;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  @media (max-width: 767px) { .bottom-nav { display: flex; } }
+  .bottom-nav button {
+    background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font-size: 10.5px; color: var(--text-muted); font-family: inherit; cursor: pointer; flex: 1; padding: 6px 0;
+  }
+  .bottom-nav button.active { color: var(--series-matija); }
+  .bottom-nav .fab {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--series-matija); color: #fff;
+    display: flex; align-items: center; justify-content: center; margin-top: -20px;
+    box-shadow: 0 4px 10px rgba(42,120,214,0.4);
+  }
+  .bottom-nav .fab-label { margin-top: 1px; }
+
+  main { padding: 24px 0 64px; display: flex; flex-direction: column; gap: 24px; }
+  @media (max-width: 767px) { main.with-bottom-nav { padding-bottom: 88px; } }
+
+  .card {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px;
+    padding: 18px; box-shadow: 0 1px 2px rgba(11,11,11,0.03);
+  }
+  .card h2 { margin: 0 0 12px; font-size: 13px; font-weight: 600; }
+  .section-title { margin: 0 0 12px; font-size: 13px; font-weight: 600; }
+
+  .field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 500; color: var(--text-secondary); }
+  .field input, .field select {
+    border: 1px solid var(--border); background: var(--surface-2); border-radius: 8px;
+    padding: 9px 10px; font-size: 13px; color: var(--text-primary); outline: none; font-family: inherit; width: 100%;
+  }
+  .field input:focus, .field select:focus { border-color: var(--series-matija); }
+  .btn-primary {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    background: var(--series-matija); color: #fff; border: none; border-radius: 8px;
+    padding: 10px 14px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit;
+  }
+  .btn-primary:hover { opacity: .92; }
+  .btn-secondary {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    background: transparent; color: var(--text-secondary); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit;
+  }
+  .btn-secondary:hover { background: var(--page); }
+  .btn-danger { color: var(--critical); }
+  .form-error { margin: 8px 0 0; font-size: 12px; color: var(--critical); }
+
+  /* Centered screens: profile picker + setup wizard */
+  .center-screen { min-height: calc(100vh - 65px); display: flex; align-items: center; justify-content: center; padding: 32px 16px; }
+  .center-card { width: 100%; max-width: 440px; }
+  .center-card h1 { font-size: 19px; margin: 0 0 4px; text-align: center; }
+  .center-card > p.sub { text-align: center; color: var(--text-muted); font-size: 13px; margin: 0 0 24px; }
+
+  .picker-options { display: flex; flex-direction: column; gap: 12px; }
+  .picker-option {
+    display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; cursor: pointer;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px; padding: 16px;
+    font-family: inherit; transition: border-color .15s, box-shadow .15s;
+  }
+  .picker-option:hover { border-color: var(--series-matija); box-shadow: 0 2px 10px rgba(11,11,11,0.06); }
+  .picker-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 16px; font-weight: 600; flex-shrink: 0; }
+  .picker-option .meta { display: flex; flex-direction: column; }
+  .picker-option .meta strong { font-size: 14px; color: var(--text-primary); }
+  .picker-option .meta span { font-size: 12px; color: var(--text-muted); }
+
+  .wizard-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+  .wizard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px; }
+  .wizard-section-label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .03em;
+    margin: 18px 0 10px; }
+  .wizard-section-label:first-of-type { margin-top: 4px; }
+
+  /* Trend chart */
+  .chart-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+  .metric-tabs { display: flex; gap: 4px; flex-wrap: wrap; background: var(--page); border-radius: 999px; padding: 3px; }
+  .metric-tabs button {
+    border: none; background: none; font-family: inherit; font-size: 12px; font-weight: 500; color: var(--text-secondary);
+    padding: 6px 11px; border-radius: 999px; cursor: pointer;
+  }
+  .metric-tabs button.active { background: var(--surface-2); color: var(--text-primary); box-shadow: 0 1px 2px rgba(11,11,11,0.08); }
+  .chart-empty { padding: 40px 0; text-align: center; color: var(--text-muted); font-size: 13px; }
+  .chart-wrap { position: relative; padding-top: 6px; }
+  .chart-wrap svg { display: block; width: 100%; height: 260px; overflow: visible; }
+  .chart-point { cursor: pointer; }
+  #chart-tooltip {
+    position: absolute; pointer-events: none; background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 10px; font-size: 12px; box-shadow: 0 2px 8px rgba(11,11,11,0.12);
+    display: none; white-space: nowrap; z-index: 5;
+  }
+  #chart-tooltip .tt-date { font-weight: 600; margin-bottom: 2px; }
+  #chart-tooltip .tt-row { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+  #chart-tooltip .tt-val { font-weight: 600; color: var(--text-primary); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 640px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (min-width: 640px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+  .muted { color: var(--text-muted); font-size: 13px; }
+
+  .new-entry-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .new-entry-bar p { margin: 0; font-size: 12px; color: var(--text-muted); }
+
+  .goal-top { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
+  .goal-current { font-size: 24px; font-weight: 600; }
+  .goal-current small { font-size: 13px; font-weight: 400; color: var(--text-muted); }
+  .goal-start { font-size: 12px; color: var(--text-muted); margin: 2px 0 0; }
+  .goal-target { display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 500; color: var(--text-secondary); white-space: nowrap; }
+  .progress-track { height: 8px; width: 100%; border-radius: 999px; background: var(--grid); overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 999px; transition: width .25s; }
+  .goal-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px; font-size: 12px; color: var(--text-secondary); margin-top: 8px; }
+  .goal-eta { margin: 8px 0 0; font-size: 12px; color: var(--text-muted); }
+
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-tile { background: var(--page); border-radius: 12px; padding: 10px 12px; }
+  .stat-tile .stat-label { margin: 0 0 4px; font-size: 11px; color: var(--text-muted); }
+  .stat-tile .stat-value { font-size: 17px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+  .status-line { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; margin-top: 3px; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .stats-count { margin: 10px 0 0; font-size: 12px; color: var(--text-muted); }
+
+  table.history { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.history th { text-align: left; font-size: 11px; font-weight: 500; color: var(--text-muted); padding: 6px 10px 6px 0; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+  table.history td { padding: 8px 10px 8px 0; border-bottom: 1px solid var(--grid); color: var(--text-secondary); white-space: nowrap; }
+  table.history tr:last-child td { border-bottom: none; }
+  .row-weight { font-weight: 600; color: var(--text-primary); }
+  .table-scroll { overflow-x: auto; }
+  .table-empty { padding: 24px 0; text-align: center; color: var(--text-muted); font-size: 13px; }
+  .lock-note { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); margin-top: 10px; }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center;
+    justify-content: center; padding: 16px; z-index: 20;
+  }
+  .modal { width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; background: var(--surface-2);
+    border-radius: 16px; padding: 20px; box-shadow: 0 12px 32px rgba(0,0,0,0.18); }
+  .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .modal-head h2 { margin: 0; font-size: 15px; font-weight: 600; }
+  .modal-sub { margin: 0 0 16px; font-size: 12px; color: var(--text-muted); }
+  .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .modal-note {
+    font-size: 12px; color: var(--text-muted); background: var(--page); border: 1px dashed var(--border);
+    border-radius: 10px; padding: 8px 12px; margin-top: 14px;
+  }
+
+  /* Profil tab */
+  .profile-head { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+  .profile-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 20px; font-weight: 600; flex-shrink: 0; }
+  .profile-head strong { font-size: 16px; display: block; }
+  .profile-head span { font-size: 12px; color: var(--text-muted); }
+  .profile-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0 4px; }
+  .profile-meta .stat-tile .stat-label { margin: 0 0 4px; }
+
+  /* Kreiraj jelo tab */
+  .choice-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  .choice-pills button {
+    border: 1px solid var(--border); background: var(--surface-2); border-radius: 999px; padding: 8px 14px;
+    font-size: 12.5px; font-weight: 500; color: var(--text-secondary); cursor: pointer; font-family: inherit;
+  }
+  .choice-pills button.active { background: var(--series-matija); border-color: var(--series-matija); color: #fff; }
+  .ingredient-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .ingredient-list li {
+    display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--text-secondary);
+    padding: 9px 11px; background: var(--page); border-radius: 8px;
+  }
+  .ingredient-list li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--series-matija); flex-shrink: 0; }
+
+  .dish-image { width: 168px; height: 168px; margin: 0 auto 14px; border-radius: 16px; overflow: hidden; background: var(--page); border: 1px solid var(--border); }
+  .meal-option-list { display: flex; flex-direction: column; gap: 8px; }
+  .meal-option {
+    display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; cursor: pointer;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px;
+    font-family: inherit; transition: border-color .15s, box-shadow .15s;
+  }
+  .meal-option:hover { border-color: var(--series-matija); box-shadow: 0 2px 10px rgba(11,11,11,0.06); }
+  .meal-option .thumb { width: 48px; height: 48px; border-radius: 10px; overflow: hidden; background: var(--page); border: 1px solid var(--border); flex-shrink: 0; }
+  .meal-option .meta { display: flex; flex-direction: column; gap: 2px; }
+  .meal-option .meta strong { font-size: 13px; color: var(--text-primary); }
+  .meal-option .meta span { font-size: 11.5px; color: var(--text-muted); }
+  .steps-list { list-style: none; counter-reset: step; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .steps-list li {
+    counter-increment: step; display: flex; gap: 10px; align-items: flex-start; font-size: 13px;
+    color: var(--text-secondary); padding: 9px 11px; background: var(--page); border-radius: 8px;
+  }
+  .steps-list li::before {
+    content: counter(step); flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--series-matija);
+    color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Kalorije — kamera */
+  .camera-drop {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    border: 2px dashed var(--border); border-radius: 14px; padding: 32px 16px; text-align: center; color: var(--text-muted);
+  }
+  .camera-preview { width: 100%; max-height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; }
+  .food-log-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+  .food-log-row { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--text-secondary); background: var(--page); border-radius: 8px; padding: 7px 10px; }
+
+  /* Sync / loading stanja (Firestore) */
+  .sync-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; color: var(--text-muted); font-size: 13px; text-align: center; padding: 24px; }
+  .sync-spinner { width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--grid); border-top-color: var(--series-matija); animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .sync-error { color: var(--critical); font-size: 12px; background: var(--page); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; max-width: 360px; }
+  .sync-badge { position: fixed; bottom: calc(8px + env(safe-area-inset-bottom)); right: max(8px, env(safe-area-inset-right)); font-size: 10.5px; color: var(--text-muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 3px 9px; z-index: 30; display: flex; align-items: center; gap: 5px; }
+  .sync-badge .dot { width: 6px; height: 6px; border-radius: 50%; }
+  @media (max-width: 767px) {
+    .sync-badge { bottom: calc(60px + env(safe-area-inset-bottom) + 10px); }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<!-- Firebase (compat SDK — radi s plain <script> tagovima bez build alata) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+  // ===== KORAK 4 iz upute: ovdje zalijepi SVOJ Firebase config =====
+  // (Firebase Console → Project settings → General → "Your apps" → Config)
+  // Ovo nije tajna lozinka, normalno je da je vidljivo u kodu.
+  var FIREBASE_CONFIG = {
+    apiKey: "AIzaSyC22BdwQxvPVGlyYuiDS5unB_PaBznqTJg",
+    authDomain: "kgtracker-f2c0b.firebaseapp.com",
+    projectId: "kgtracker-f2c0b",
+    storageBucket: "kgtracker-f2c0b.firebasestorage.app",
+    messagingSenderId: "83473461138",
+    appId: "1:83473461138:web:d03a8c28ac4595bb59db4b"
+  };
+</script>
+<script>
+(function () {
+  "use strict";
+
+  /* =========================================================================
+   * ICONS
+   * =======================================================================*/
+  function icon(name, size) {
+    size = size || 16;
+    var paths = {
+      scale: '<path d="M12 3v18M4 8h16M6 8l-3 6a3 3 0 0 0 6 0Zm12 0l-3 6a3 3 0 0 0 6 0Z"/>',
+      settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06A2 2 0 1 1 7.03 4.24l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1Z"/>',
+      plus: '<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',
+      target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+      up: '<path d="M4 17 10 11 14 15 20 7"/><path d="M20 12V7h-5"/>',
+      down: '<path d="M4 7 10 13 14 9 20 17"/><path d="M20 12v5h-5"/>',
+      minus: '<path d="M5 12h14"/>',
+      x: '<path d="M18 6 6 18M6 6l12 12"/>',
+      rotate: '<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>',
+      users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+      lock: '<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+      chevron: '<path d="M9 6l6 6-6 6"/>',
+      check: '<path d="M20 6 9 17l-5-5"/>',
+      menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+      home: '<path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-6h4v6"/>',
+      activity: '<path d="M3 3v18h18"/><path d="M7 16l3-6 3 4 3-8 3 5"/>',
+      history: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+      user: '<circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.4-4 5-6.5 8-6.5s6.6 2.5 8 6.5"/>',
+      meal: '<path d="M4 9h16"/><path d="M5 9a7 7 0 0 0 14 0"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/><path d="M2.5 9h1.5M20 9h1.5"/>',
+      camera: '<path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="4"/>'
+    };
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (paths[name] || "") + "</svg>";
+  }
+
+  /* =========================================================================
+   * CALCULATIONS
+   * =======================================================================*/
+  function calcBMI(weightKg, heightCm) {
+    if (!weightKg || !heightCm) return null;
+    var m = heightCm / 100;
+    return weightKg / (m * m);
+  }
+  function bmiCategory(bmi) {
+    if (bmi == null) return { label: "—", status: "muted" };
+    if (bmi < 18.5) return { label: "Pothranjenost", status: "warning" };
+    if (bmi < 25) return { label: "Normalna težina", status: "good" };
+    if (bmi < 30) return { label: "Prekomjerna težina", status: "warning" };
+    return { label: "Pretilost", status: "critical" };
+  }
+  function sortedEntries(entries) {
+    return entries.slice().sort(function (a, b) { return a.date.localeCompare(b.date); });
+  }
+  function weeklyAverages(sorted, key) {
+    if (sorted.length === 0) return [];
+    var first = new Date(sorted[0].date);
+    var buckets = {}, order = [];
+    sorted.forEach(function (e) {
+      if (e[key] == null) return;
+      var days = Math.floor((new Date(e.date) - first) / 86400000);
+      var week = Math.floor(days / 7);
+      if (!buckets[week]) { buckets[week] = []; order.push(week); }
+      buckets[week].push(e[key]);
+    });
+    order.sort(function (a, b) { return a - b; });
+    return order.map(function (week) {
+      var arr = buckets[week];
+      return { week: week, avg: arr.reduce(function (s, w) { return s + w; }, 0) / arr.length };
+    });
+  }
+  function computeStats(entries, goalWeight) {
+    var sorted = sortedEntries(entries).filter(function (e) { return e.weight != null; });
+    if (sorted.length === 0) {
+      return { count: 0, current: null, start: null, totalChange: null, avgWeeklyChange: null, bestWeek: null, etaWeeks: null, progressPct: null, remaining: null };
+    }
+    var start = sorted[0].weight;
+    var current = sorted[sorted.length - 1].weight;
+    var totalChange = +(current - start).toFixed(1);
+    var firstDate = new Date(sorted[0].date);
+    var lastDate = new Date(sorted[sorted.length - 1].date);
+    var daySpan = Math.max(0, (lastDate - firstDate) / 86400000);
+    var avgWeeklyChange = daySpan >= 7 ? +(totalChange / (daySpan / 7)).toFixed(2) : null;
+
+    var weekly = weeklyAverages(sorted, "weight");
+    var bestWeek = null;
+    for (var i = 1; i < weekly.length; i++) {
+      var diff = +(weekly[i].avg - weekly[i - 1].avg).toFixed(2);
+      if (bestWeek === null || diff < bestWeek.diff) bestWeek = { diff: diff };
+    }
+
+    var etaWeeks = null, remaining = null, progressPct = null;
+    if (goalWeight != null) {
+      remaining = +(current - goalWeight).toFixed(1);
+      var totalJourney = start - goalWeight;
+      if (totalJourney !== 0) progressPct = Math.min(100, Math.max(0, ((start - current) / totalJourney) * 100));
+      if (avgWeeklyChange != null && avgWeeklyChange < 0 && remaining > 0) etaWeeks = Math.ceil(remaining / Math.abs(avgWeeklyChange));
+    }
+    return { count: sorted.length, current: current, start: start, totalChange: totalChange, avgWeeklyChange: avgWeeklyChange, bestWeek: bestWeek, etaWeeks: etaWeeks, progressPct: progressPct, remaining: remaining };
+  }
+  function measurementDelta(entries, key) {
+    var sorted = sortedEntries(entries).filter(function (e) { return e[key] != null; });
+    if (sorted.length === 0) return null;
+    var first = sorted[0][key];
+    var last = sorted[sorted.length - 1][key];
+    return { first: first, last: last, delta: +(last - first).toFixed(1) };
+  }
+  function parseISO(d) { return new Date(d + "T00:00:00"); }
+  function fmtShort(iso) { return parseISO(iso).toLocaleDateString("hr-HR", { day: "2-digit", month: "2-digit" }); }
+  function fmtFull(iso) { return parseISO(iso).toLocaleDateString("hr-HR", { day: "2-digit", month: "2-digit", year: "numeric" }); }
+  function todayISO() { return new Date().toISOString().slice(0, 10); }
+  function num(v) { var n = parseFloat(String(v || "").replace(",", ".")); return isNaN(n) ? null : n; }
+
+  var STATUS_COLOR = { good: "var(--good)", warning: "var(--warning)", serious: "var(--serious)", critical: "var(--critical)", muted: "var(--text-muted)" };
+
+  var METRICS = [
+    { key: "weight", label: "Kilaža", unit: "kg" },
+    { key: "trbuh", label: "Trbuh", unit: "cm" },
+    { key: "grudi", label: "Grudi", unit: "cm" },
+    { key: "noge", label: "Noge", unit: "cm" },
+    { key: "ramena", label: "Ramena", unit: "cm" }
+  ];
+
+  /* =========================================================================
+   * KREIRAJ JELO — draft verzija koristi unaprijed pripremljene kombinacije
+   * (protein x prilog) umjesto stvarnog AI poziva, jer backend/API ključ još
+   * nisu spojeni. Kad budemo spajali pravi AI, ovaj blok postaje poziv prema
+   * backendu; ostatak (popup, prikaz rezultata) ostaje isti.
+   * =======================================================================*/
+  var PROTEINS = [
+    { key: "piletina", label: "Piletina" },
+    { key: "teletina", label: "Teletina" },
+    { key: "svinjetina", label: "Svinjetina" },
+    { key: "junetina", label: "Junetina" },
+    { key: "govedina", label: "Govedina" }
+  ];
+  var PRILOZI = [
+    { key: "riza", label: "Riža" },
+    { key: "krumpir", label: "Krumpir" },
+    { key: "palenta", label: "Palenta" },
+    { key: "tjestenina", label: "Tjestenina" }
+  ];
+  function proteinLabel(key) { var p = PROTEINS.filter(function (x) { return x.key === key; })[0]; return p ? p.label : key; }
+  function prilogLabel(key) { var p = PRILOZI.filter(function (x) { return x.key === key; })[0]; return p ? p.label : key; }
+
+  // MEALS_MATRIX: za svaku od 20 kombinacija (5 mesa x 4 priloga) postoji
+  // SVOJIH 10 potpuno različitih jela (drugačiji tip pripreme, kuhinja, umak —
+  // ne isti kalup s zamijenjenom riječi). Draft podaci dok backend/pravi AI
+  // nije spojen; kad se spoji, mijenja se samo ova funkcija/podaci, UI ostaje isti.
+  var MEALS_MATRIX = {
+    piletina: {
+      riza: [
+        { name: "Piletina teriyaki", ingredients: ["Pileći file — 600 g", "Teriyaki umak — 100 ml", "Med — 1 žlica", "Sezam, mladi luk"], kcal: 380, protein: 42, carbs: 12, fat: 12, steps: ["Pileći file izreži na komade i popeci na jako zagrijanom ulju dok ne porumeni.", "Zalij teriyaki umakom pomiješanim s medom, kuhaj 3-4 min da se umak zgusne.", "Posipaj sezamom i mladim lukom prije posluživanja."] },
+        { name: "Pileći curry (žuti)", ingredients: ["Pileći file — 600 g", "Curry pasta žuta — 2 žlice", "Kokosovo mlijeko — 300 ml", "Luk, češnjak"], kcal: 420, protein: 38, carbs: 10, fat: 24, steps: ["Popeci komade piletine s lukom i češnjakom na ulju.", "Dodaj curry pastu, kratko propirjaj.", "Zalij kokosovim mlijekom, kuhaj poklopljeno 15-20 min."] },
+        { name: "Pileća jambalaya", ingredients: ["Pileći file — 500 g", "Kobasica (chorizo) — 200 g", "Paprika, luk, celer", "Pasirana rajčica — 300 g"], kcal: 440, protein: 36, carbs: 14, fat: 22, steps: ["Popeci piletinu i kobasicu zajedno na ulju.", "Dodaj sitno narezano povrće, kratko propirjaj.", "Zalij pasiranom rajčicom, kuhaj poklopljeno 15 min uz cajun začine."] },
+        { name: "Piletina s kokosom i limunskom travom", ingredients: ["Pileći file — 600 g", "Kokosovo mlijeko — 300 ml", "Limunska trava, đumbir", "Riblji umak — 1 žlica"], kcal: 400, protein: 40, carbs: 8, fat: 22, steps: ["Piletinu marinira kratko u đumbiru i limunskoj travi.", "Popeci na ulju dok ne porumeni.", "Zalij kokosovim mlijekom i ribljim umakom, kuhaj 15 min."] },
+        { name: "Piletina biryani", ingredients: ["Pileći file — 600 g", "Jogurt — 150 g", "Biryani začini (kurkuma, kim, cimet)", "Prženi luk"], kcal: 430, protein: 40, carbs: 15, fat: 20, steps: ["Piletinu marinira u jogurtu i začinima 15-ak min.", "Popeci s lukom dok meso ne porumeni.", "Poklopljeno pirjaj 10-15 min da se začini upiju."] },
+        { name: "Piletina satay s kikirikijem", ingredients: ["Pileći file — 600 g", "Maslac od kikirikija — 3 žlice", "Kokosovo mlijeko — 150 ml", "Soja umak, limeta"], kcal: 450, protein: 40, carbs: 10, fat: 26, steps: ["Piletinu izreži na trakice i popeci na tavi ili žaru.", "Pripremi umak od kikirikija, kokosovog mlijeka i soje.", "Prelij ili posluži umak uz meso."] },
+        { name: "Pileća paella", ingredients: ["Pileći file — 500 g", "Paprika, grašak", "Šafran ili kurkuma", "Pileći temeljac — 400 ml"], kcal: 400, protein: 36, carbs: 18, fat: 14, steps: ["Popeci piletinu s paprikom na ulju.", "Dodaj šafran ili kurkumu, kratko propirjaj.", "Zalij temeljcem, kuhaj poklopljeno dok se tekućina ne upije."] },
+        { name: "Piletina wok s povrćem", ingredients: ["Pileći file (trakice) — 600 g", "Mješano povrće — 400 g", "Soja umak — 3 žlice", "Đumbir, češnjak"], kcal: 370, protein: 40, carbs: 14, fat: 12, steps: ["Piletinu brzo poprži na jakom ulju dok ne porumeni, izvadi.", "Na istoj tavi poprži povrće par minuta.", "Vrati piletinu, začini soja umakom, đumbirom i češnjakom."] },
+        { name: "Piletina korma", ingredients: ["Pileći file — 600 g", "Jogurt — 150 g", "Bademi mljeveni — 2 žlice", "Curry začini blagi"], kcal: 440, protein: 38, carbs: 10, fat: 26, steps: ["Piletinu popeci s lukom i blagim curry začinima.", "Dodaj jogurt i mljevene bademe.", "Kuhaj poklopljeno 15-20 min na laganoj vatri."] },
+        { name: "Piletina gyros bowl", ingredients: ["Pileći file — 600 g", "Grčki jogurt — 100 g", "Origano, limun", "Krastavac, rajčica"], kcal: 360, protein: 42, carbs: 8, fat: 14, steps: ["Piletinu marinira u ulju, limunu i origanu 15 min.", "Ispeci na tavi dok ne porumeni.", "Poslužiti sa svježim povrćem i umakom od jogurta."] }
+      ],
+      krumpir: [
+        { name: "Pileći paprikaš", ingredients: ["Pileći bataci/zabaci — 800 g", "Luk — 2 kom", "Mljevena paprika — 1 žlica", "Vrhnje za kuhanje — 100 ml"], kcal: 400, protein: 40, carbs: 6, fat: 20, steps: ["Popeci piletinu s lukom dok ne porumeni.", "Dodaj mljevenu papriku, zalij vodom, pirjaj 25-30 min.", "Pred kraj umiješaj vrhnje."] },
+        { name: "Pečena piletina s ružmarinom", ingredients: ["Pileći bataci/zabaci — 800 g", "Ružmarin", "Češnjak — 3 režnja", "Maslinovo ulje"], kcal: 420, protein: 42, carbs: 3, fat: 22, steps: ["Zagrij pećnicu na 200°C.", "Piletinu natrljaj uljem, ružmarinom, češnjakom i solju.", "Peci 40-45 min dok ne porumeni."] },
+        { name: "Piletina Kijev punjena maslacem", ingredients: ["Pileći file — 600 g", "Maslac s biljem — 80 g", "Prezle", "Jaje"], kcal: 480, protein: 40, carbs: 10, fat: 30, steps: ["Pileći file istanji, u sredinu stavi maslac s biljem i zarolaj.", "Uvaljaj u jaje pa prezle.", "Isprži na ulju dok ne porumeni, dopeci u pećnici 10 min."] },
+        { name: "Piletina fricassee", ingredients: ["Pileći file — 600 g", "Vrhnje za kuhanje — 200 ml", "Gljive — 200 g", "Luk"], kcal: 460, protein: 38, carbs: 6, fat: 28, steps: ["Popeci piletinu s lukom i gljivama.", "Zalij vrhnjem.", "Kuhaj poklopljeno 15 min dok se umak ne zgusne."] },
+        { name: "Piletina cacciatore", ingredients: ["Pileći file — 600 g", "Gljive — 200 g", "Pasirana rajčica — 300 g", "Bijelo vino — 100 ml"], kcal: 400, protein: 38, carbs: 8, fat: 18, steps: ["Popeci piletinu s gljivama.", "Zalij vinom pa rajčicom.", "Pirjaj poklopljeno 20-25 min."] },
+        { name: "Pileći schnitzel", ingredients: ["Pileći file — 600 g", "Jaje", "Prezle", "Brašno"], kcal: 420, protein: 38, carbs: 14, fat: 20, steps: ["Pileći file istanji, posoli.", "Uvaljaj u brašno, jaje pa prezle.", "Isprži na ulju sa svake strane do zlatne boje."] },
+        { name: "Piletina sa senfom i medom", ingredients: ["Pileći file — 700 g", "Senf — 2 žlice", "Med — 2 žlice", "Maslinovo ulje"], kcal: 400, protein: 40, carbs: 12, fat: 16, steps: ["Zagrij pećnicu na 200°C.", "Piletinu premaži mješavinom senfa i meda.", "Peci 30-35 min dok ne porumeni."] },
+        { name: "Piletina fajita", ingredients: ["Pileći file (trakice) — 600 g", "Paprika, luk", "Fajita začin"], kcal: 360, protein: 40, carbs: 8, fat: 14, steps: ["Piletinu marinira kratko u fajita začinu.", "Poprži na jakom ulju s paprikom i lukom.", "Poslužiti vruće."] },
+        { name: "Piletina u pivu pirjana", ingredients: ["Pileći bataci — 800 g", "Pivo — 300 ml", "Luk — 2 kom", "Senf"], kcal: 420, protein: 40, carbs: 10, fat: 18, steps: ["Popeci piletinu s lukom.", "Zalij pivom i senfom.", "Pirjaj poklopljeno 30-35 min."] },
+        { name: "Piletina s kupusom i kimom", ingredients: ["Pileći file — 600 g", "Kiseli kupus — 300 g", "Kim"], kcal: 400, protein: 38, carbs: 8, fat: 18, steps: ["Popeci piletinu.", "Dodaj kupus i kim.", "Pirjaj poklopljeno 25-30 min."] }
+      ],
+      palenta: [
+        { name: "Pileći perkelt", ingredients: ["Pileći file — 600 g", "Vrhnje — 150 ml", "Luk", "Mljevena paprika"], kcal: 420, protein: 38, carbs: 8, fat: 22, steps: ["Popeci piletinu s lukom i paprikom.", "Zalij malo vode, pirjaj 15 min.", "Umiješaj vrhnje na kraju."] },
+        { name: "Piletina s pancetom i vrhnjem", ingredients: ["Pileći file — 600 g", "Panceta — 100 g", "Vrhnje — 150 ml", "Luk"], kcal: 460, protein: 40, carbs: 5, fat: 28, steps: ["Popeci pancetu, dodaj piletinu.", "Popeci zajedno s lukom.", "Zalij vrhnjem, kuhaj 10 min."] },
+        { name: "Piletina osso buco stil", ingredients: ["Pileći bataci — 700 g", "Mrkva, celer", "Bijelo vino — 100 ml"], kcal: 400, protein: 40, carbs: 8, fat: 16, steps: ["Popeci piletinu s povrćem.", "Zalij vinom, pusti da ispari.", "Pirjaj poklopljeno 30-40 min."] },
+        { name: "Piletina s rajčicom i maslinama", ingredients: ["Pileći file — 600 g", "Pasirana rajčica — 300 g", "Masline — 80 g", "Kapari"], kcal: 380, protein: 38, carbs: 8, fat: 16, steps: ["Popeci piletinu.", "Zalij rajčicom.", "Dodaj masline i kapare, pirjaj 15-20 min."] },
+        { name: "Piletina s gljivama i bijelim vinom", ingredients: ["Pileći file — 600 g", "Gljive — 250 g", "Bijelo vino — 100 ml", "Peršin"], kcal: 380, protein: 40, carbs: 5, fat: 16, steps: ["Popeci piletinu i gljive.", "Zalij vinom, pusti da ispari.", "Kuhaj 10 min, posipaj peršinom."] },
+        { name: "Piletina coq au vin stil", ingredients: ["Pileći bataci — 700 g", "Crno vino — 200 ml", "Luk", "Panceta"], kcal: 440, protein: 40, carbs: 8, fat: 20, steps: ["Popeci pancetu i piletinu.", "Dodaj luk, zalij crnim vinom.", "Pirjaj poklopljeno 30-35 min."] },
+        { name: "Piletina s karameliziranim lukom", ingredients: ["Pileći file — 600 g", "Luk — 3 kom", "Balzamico ocat", "Smeđi šećer"], kcal: 400, protein: 38, carbs: 14, fat: 16, steps: ["Luk sporo karameliziraj na ulju 15 min.", "Dodaj piletinu, popeci.", "Zalij balzamikom, kuhaj 5 min."] },
+        { name: "Piletina s kestenjem", ingredients: ["Pileći file — 600 g", "Kesten kuhani — 200 g", "Luk", "Vrhnje — 100 ml"], kcal: 420, protein: 38, carbs: 16, fat: 18, steps: ["Popeci piletinu s lukom.", "Dodaj kesten.", "Zalij vrhnjem, kuhaj 10 min."] },
+        { name: "Piletina brudet stil", ingredients: ["Pileći file — 600 g", "Pasirana rajčica — 300 g", "Bijelo vino", "Češnjak"], kcal: 380, protein: 38, carbs: 8, fat: 14, steps: ["Popeci piletinu s češnjakom.", "Zalij vinom pa rajčicom.", "Pirjaj poklopljeno 20 min."] },
+        { name: "Piletina sa slatkom paprikom", ingredients: ["Pileći file — 600 g", "Slatka crvena paprika — 3 kom", "Luk", "Pasirana rajčica"], kcal: 390, protein: 38, carbs: 10, fat: 15, steps: ["Popeci piletinu s lukom i paprikom.", "Zalij rajčicom.", "Pirjaj poklopljeno 25 min."] }
+      ],
+      tjestenina: [
+        { name: "Piletina alfredo", ingredients: ["Pileći file — 500 g", "Vrhnje za kuhanje — 200 ml", "Parmezan — 80 g", "Češnjak"], kcal: 460, protein: 40, carbs: 6, fat: 28, steps: ["Popeci piletinu.", "Zalij vrhnjem i češnjakom.", "Umiješaj parmezan da se umak zgusne."] },
+        { name: "Piletina carbonara stil", ingredients: ["Pileći file — 500 g", "Panceta — 100 g", "Jaja — 2 kom", "Parmezan"], kcal: 480, protein: 42, carbs: 6, fat: 28, steps: ["Popeci pancetu i piletinu.", "Skini s vatre, umiješaj razmućena jaja s parmezanom.", "Brzo promiješaj da se stvori kremasti umak."] },
+        { name: "Piletina pesto", ingredients: ["Pileći file — 500 g", "Pesto (bosiljak, pinjoli) — 100 g", "Cherry rajčice"], kcal: 440, protein: 40, carbs: 6, fat: 26, steps: ["Popeci piletinu.", "Umiješaj pesto.", "Dodaj prepolovljene cherry rajčice."] },
+        { name: "Piletina arrabbiata", ingredients: ["Pileći file — 500 g", "Pasirana rajčica — 400 g", "Čili", "Češnjak"], kcal: 380, protein: 40, carbs: 8, fat: 14, steps: ["Popeci piletinu s češnjakom i čilijem.", "Zalij rajčicom.", "Kuhaj poklopljeno 15-20 min."] },
+        { name: "Piletina bolognese stil", ingredients: ["Mljevena piletina — 500 g", "Luk, mrkva, celer", "Pasirana rajčica — 400 g"], kcal: 400, protein: 38, carbs: 10, fat: 16, steps: ["Popeci povrće, dodaj mljevenu piletinu.", "Popeci dok ne porumeni.", "Zalij rajčicom, kuhaj poklopljeno 25-30 min."] },
+        { name: "Piletina piccata", ingredients: ["Pileći file — 500 g", "Limun", "Kapari", "Maslac"], kcal: 400, protein: 40, carbs: 5, fat: 20, steps: ["Piletinu popeci na ulju sa svake strane.", "Zalij limunovim sokom i kaparima.", "Umiješaj maslac da se umak zgusne."] },
+        { name: "Piletina funghi", ingredients: ["Pileći file — 500 g", "Gljive — 250 g", "Bijelo vino — 100 ml"], kcal: 400, protein: 40, carbs: 6, fat: 18, steps: ["Popeci piletinu i gljive.", "Zalij vinom.", "Kuhaj 10 min dok umak ne omekša."] },
+        { name: "Piletina primavera", ingredients: ["Pileći file — 500 g", "Tikvica, mrkva, grašak", "Maslinovo ulje"], kcal: 360, protein: 38, carbs: 10, fat: 14, steps: ["Popeci piletinu.", "Dodaj sitno povrće, popirjaj.", "Začini uljem, solju i paprom."] },
+        { name: "Piletina aglio e olio s brokulom", ingredients: ["Pileći file — 500 g", "Brokula — 300 g", "Češnjak, maslinovo ulje"], kcal: 350, protein: 40, carbs: 8, fat: 14, steps: ["Popeci piletinu.", "Kratko blanširaj brokulu.", "Popirjaj sve zajedno s češnjakom i uljem."] },
+        { name: "Piletina s pršutom i graškom", ingredients: ["Pileći file — 500 g", "Pršut — 100 g", "Grašak — 200 g", "Vrhnje — 100 ml"], kcal: 420, protein: 40, carbs: 8, fat: 20, steps: ["Popeci pršut i piletinu.", "Dodaj grašak.", "Zalij vrhnjem, kuhaj 5-8 min."] }
+      ]
+    },
+    teletina: {
+      riza: [
+        { name: "Teleći rižoto alla milanese", ingredients: ["Teletina (narezana) — 500 g", "Šafran", "Bijelo vino — 100 ml", "Goveđi temeljac"], kcal: 420, protein: 36, carbs: 12, fat: 18, steps: ["Popeci teletinu, izvadi.", "Na istom ulju kratko propirjaj šafran u vinu.", "Vrati meso, zalij temeljcem, kuhaj 15 min."] },
+        { name: "Teletina piccata", ingredients: ["Teleći file — 500 g", "Limun", "Kapari", "Maslac"], kcal: 380, protein: 40, carbs: 4, fat: 18, steps: ["Teletinu istanji i popeci na ulju.", "Zalij limunom i kaparima.", "Umiješaj maslac na kraju."] },
+        { name: "Teletina blanquette", ingredients: ["Teletina za gulaš — 600 g", "Vrhnje — 150 ml", "Mrkva, luk"], kcal: 440, protein: 38, carbs: 8, fat: 24, steps: ["Teletinu skuhaj s lukom i mrkvom u vodi ~40 min.", "Procijedi juhu, napravi bijeli umak s maslacem i brašnom.", "Zalij vrhnjem i vrati meso u umak."] },
+        { name: "Teletina saltimbocca", ingredients: ["Teleći file — 500 g", "Pršut — 100 g", "Kadulja", "Bijelo vino"], kcal: 400, protein: 42, carbs: 3, fat: 18, steps: ["Na file stavi list kadulje i pršut, pričvrsti čačkalicom.", "Popeci na ulju sa strane pršuta prvo.", "Zalij vinom, kratko kuhaj."] },
+        { name: "Teletina s pancetom i graškom", ingredients: ["Teleći file — 500 g", "Panceta — 100 g", "Grašak — 200 g"], kcal: 420, protein: 40, carbs: 8, fat: 20, steps: ["Popeci pancetu.", "Dodaj teletinu, popeci.", "Dodaj grašak, kuhaj 8 min."] },
+        { name: "Teleći gulaš mađarski", ingredients: ["Teletina za gulaš — 600 g", "Mljevena paprika", "Luk", "Pasirana rajčica"], kcal: 400, protein: 38, carbs: 8, fat: 18, steps: ["Popeci teletinu s lukom.", "Dodaj papriku i rajčicu.", "Pirjaj poklopljeno 50-60 min."] },
+        { name: "Teletina scaloppine s bijelim vinom", ingredients: ["Teleći file — 500 g", "Bijelo vino — 100 ml", "Maslac, peršin"], kcal: 380, protein: 40, carbs: 3, fat: 18, steps: ["Teletinu istanji, popeci na ulju.", "Zalij vinom, pusti da ispari.", "Umiješaj maslac i peršin."] },
+        { name: "Teletina curry blagi", ingredients: ["Teletina — 500 g", "Jogurt — 150 g", "Curry začin blagi"], kcal: 420, protein: 36, carbs: 8, fat: 22, steps: ["Teletinu popeci s lukom.", "Dodaj curry začin, kratko propirjaj.", "Umiješaj jogurt, kuhaj poklopljeno 20 min."] },
+        { name: "Teletina s limunom i artičokama", ingredients: ["Teleći file — 500 g", "Artičoke — 200 g", "Limun, bijelo vino"], kcal: 380, protein: 40, carbs: 6, fat: 16, steps: ["Popeci teletinu.", "Dodaj artičoke, kratko popirjaj.", "Zalij limunom i vinom, kuhaj 10 min."] },
+        { name: "Teleći paprikaš", ingredients: ["Teletina — 600 g", "Vrhnje — 150 ml", "Mljevena paprika", "Luk"], kcal: 420, protein: 38, carbs: 6, fat: 22, steps: ["Popeci teletinu s lukom i paprikom.", "Zalij vodom, pirjaj 30 min.", "Umiješaj vrhnje na kraju."] }
+      ],
+      krumpir: [
+        { name: "Pečena teletina s ružmarinom", ingredients: ["Teleći but — 800 g", "Ružmarin", "Bijelo vino — 100 ml", "Češnjak"], kcal: 420, protein: 42, carbs: 4, fat: 20, steps: ["Zagrij pećnicu na 190°C.", "Teletinu natrljaj biljem i češnjakom.", "Peci uz zalijevanje vinom ~1h."] },
+        { name: "Teleći Wiener schnitzel", ingredients: ["Teleći file — 600 g", "Jaje", "Prezle", "Brašno"], kcal: 460, protein: 40, carbs: 16, fat: 24, steps: ["Teletinu istanji, posoli.", "Uvaljaj u brašno, jaje pa prezle.", "Isprži na dosta ulja do zlatne boje."] },
+        { name: "Teletina u umaku od naranče", ingredients: ["Teleći file — 500 g", "Naranča — 2 kom", "Maslac"], kcal: 400, protein: 38, carbs: 10, fat: 18, steps: ["Popeci teletinu.", "Zalij sokom naranče.", "Umiješaj maslac, kuhaj 5 min."] },
+        { name: "Teletina u umaku od senfa i vrhnja", ingredients: ["Teleći file — 500 g", "Senf — 2 žlice", "Vrhnje — 150 ml"], kcal: 440, protein: 38, carbs: 5, fat: 26, steps: ["Popeci teletinu.", "Umiješaj senf.", "Zalij vrhnjem, kuhaj 8-10 min."] },
+        { name: "Bečki gulaš (Wiener gulasch)", ingredients: ["Teletina za gulaš — 700 g", "Luk — 3 kom", "Mljevena paprika"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci puno luka na ulju.", "Dodaj teletinu i papriku.", "Pirjaj poklopljeno 1h."] },
+        { name: "Teletina fricassee", ingredients: ["Teleći file — 500 g", "Vrhnje — 150 ml", "Gljive", "Limun"], kcal: 440, protein: 38, carbs: 6, fat: 26, steps: ["Popeci teletinu i gljive.", "Zalij vrhnjem.", "Dodaj kap limuna, kuhaj 10 min."] },
+        { name: "Teletina u bijelom vinu pirjana", ingredients: ["Teletina — 700 g", "Bijelo vino — 200 ml", "Luk, lovorov list"], kcal: 400, protein: 40, carbs: 5, fat: 16, steps: ["Popeci teletinu s lukom.", "Zalij vinom.", "Pirjaj poklopljeno 45-60 min."] },
+        { name: "Teletina s kaparima i inćunima", ingredients: ["Teleći file — 500 g", "Kapari, inćuni", "Majoneza"], kcal: 420, protein: 40, carbs: 3, fat: 24, steps: ["Teletinu popeci na ulju.", "Pripremi umak od kapara, inćuna i majoneze.", "Prelij umak preko mesa."] },
+        { name: "Teletina u pivu pirjana", ingredients: ["Teletina — 700 g", "Pivo — 300 ml", "Luk, senf"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci teletinu s lukom.", "Zalij pivom i senfom.", "Pirjaj poklopljeno 40-50 min."] },
+        { name: "Teleća rolada punjena špinatom i sirom", ingredients: ["Teleći file — 600 g", "Špinat — 200 g", "Sir — 100 g"], kcal: 460, protein: 42, carbs: 5, fat: 26, steps: ["File istanji, poslaži špinat i sir, zarolaj.", "Popeci na ulju sa svih strana.", "Dopeci u pećnici 15 min na 180°C."] }
+      ],
+      palenta: [
+        { name: "Teletina s kupusom i kimom", ingredients: ["Teletina — 600 g", "Kiseli kupus — 300 g", "Kim"], kcal: 400, protein: 38, carbs: 8, fat: 18, steps: ["Popeci teletinu.", "Dodaj kupus i kim.", "Pirjaj poklopljeno 35 min."] },
+        { name: "Teletina u umaku od gljiva i vrhnja", ingredients: ["Teleći file — 500 g", "Gljive — 250 g", "Vrhnje — 150 ml"], kcal: 440, protein: 38, carbs: 6, fat: 26, steps: ["Popeci teletinu i gljive.", "Zalij vrhnjem.", "Kuhaj 10 min."] },
+        { name: "Teletina osso buco milanese", ingredients: ["Teleća koljenica — 800 g", "Mrkva, celer", "Bijelo vino"], kcal: 440, protein: 44, carbs: 6, fat: 20, steps: ["Popeci koljenicu.", "Dodaj povrće, zalij vinom.", "Pirjaj poklopljeno 1.5h."] },
+        { name: "Teletina s rajčicom i bosiljkom", ingredients: ["Teleći file — 500 g", "Pasirana rajčica — 400 g", "Bosiljak"], kcal: 380, protein: 38, carbs: 8, fat: 16, steps: ["Popeci teletinu.", "Zalij rajčicom.", "Pirjaj 20-25 min, dodaj bosiljak."] },
+        { name: "Teletina brasato", ingredients: ["Teletina — 700 g", "Crno vino — 250 ml", "Luk, mrkva"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci teletinu s povrćem.", "Zalij crnim vinom.", "Pirjaj poklopljeno 1.5-2h."] },
+        { name: "Teletina s pancetom i lukom", ingredients: ["Teleći file — 500 g", "Panceta — 100 g", "Luk — 2 kom"], kcal: 440, protein: 38, carbs: 6, fat: 26, steps: ["Popeci pancetu.", "Dodaj teletinu i luk.", "Pirjaj 20 min."] },
+        { name: "Teleći perkelt", ingredients: ["Teletina — 600 g", "Vrhnje — 150 ml", "Mljevena paprika", "Luk"], kcal: 420, protein: 38, carbs: 6, fat: 22, steps: ["Popeci teletinu s lukom i paprikom.", "Zalij vodom, pirjaj 40 min.", "Umiješaj vrhnje na kraju."] },
+        { name: "Teletina s maslinama i kaparima", ingredients: ["Teleći file — 500 g", "Masline, kapari", "Pasirana rajčica"], kcal: 400, protein: 38, carbs: 6, fat: 20, steps: ["Popeci teletinu.", "Dodaj masline i kapare.", "Zalij rajčicom, pirjaj 15-20 min."] },
+        { name: "Teletina sa suhim šljivama i vinom", ingredients: ["Teletina — 600 g", "Suhe šljive — 100 g", "Crno vino — 150 ml"], kcal: 420, protein: 38, carbs: 14, fat: 16, steps: ["Popeci teletinu.", "Dodaj suhe šljive.", "Zalij vinom, pirjaj poklopljeno 40 min."] },
+        { name: "Teleće roladice punjene sirom", ingredients: ["Teleći file — 600 g", "Sir — 120 g", "Pršut — 80 g"], kcal: 460, protein: 42, carbs: 4, fat: 26, steps: ["Napravi male roladice sa sirom i pršutom.", "Popeci na ulju sa svih strana.", "Dopeci u pećnici 10-15 min."] }
+      ],
+      tjestenina: [
+        { name: "Teletina bolognese", ingredients: ["Mljevena teletina — 500 g", "Luk, mrkva, celer", "Pasirana rajčica — 400 g"], kcal: 400, protein: 38, carbs: 10, fat: 16, steps: ["Popeci povrće, dodaj mljevenu teletinu.", "Popeci dok ne porumeni.", "Zalij rajčicom, kuhaj poklopljeno 30 min."] },
+        { name: "Teletina alla pizzaiola", ingredients: ["Teleći file — 500 g", "Pasirana rajčica — 300 g", "Origano"], kcal: 380, protein: 38, carbs: 8, fat: 16, steps: ["Popeci teletinu.", "Zalij rajčicom i origanom.", "Pirjaj poklopljeno 15-20 min."] },
+        { name: "Teletina marsala", ingredients: ["Teleći file — 500 g", "Marsala (ili slatko vino) — 100 ml", "Gljive"], kcal: 420, protein: 38, carbs: 8, fat: 20, steps: ["Popeci teletinu i gljive.", "Zalij marsala vinom.", "Kuhaj 8-10 min dok se umak ne zgusne."] },
+        { name: "Teletina alla milanese pohana", ingredients: ["Teleći file — 500 g", "Jaje, prezle", "Rajčica svježa"], kcal: 440, protein: 38, carbs: 14, fat: 22, steps: ["Teletinu popani u jaju i prezlama.", "Isprži na ulju.", "Poslužiti s narezanom svježom rajčicom."] },
+        { name: "Teletina s limunovim kremastim umakom", ingredients: ["Teleći file — 500 g", "Vrhnje — 150 ml", "Limun"], kcal: 420, protein: 38, carbs: 5, fat: 22, steps: ["Popeci teletinu.", "Zalij vrhnjem i limunom.", "Kuhaj 8 min."] },
+        { name: "Teleći ragù crno vino", ingredients: ["Mljevena teletina — 500 g", "Crno vino — 150 ml", "Pasirana rajčica — 300 g"], kcal: 420, protein: 38, carbs: 8, fat: 18, steps: ["Popeci teletinu.", "Zalij vinom, pusti da ispari.", "Dodaj rajčicu, kuhaj poklopljeno 40 min."] },
+        { name: "Teletina s pestom i pinjolima", ingredients: ["Teleći file — 500 g", "Pesto — 100 g", "Pinjoli"], kcal: 440, protein: 40, carbs: 5, fat: 26, steps: ["Popeci teletinu.", "Umiješaj pesto.", "Posipaj pinjolima."] },
+        { name: "Teletina carbonara stil", ingredients: ["Teleći file — 500 g", "Panceta", "Jaja — 2 kom, parmezan"], kcal: 480, protein: 42, carbs: 6, fat: 28, steps: ["Popeci pancetu i teletinu.", "Skini s vatre, umiješaj jaja s parmezanom.", "Brzo promiješaj za kremasti umak."] },
+        { name: "Teletina s tartufnim maslacem", ingredients: ["Teleći file — 500 g", "Tartufni maslac — 40 g", "Parmezan"], kcal: 440, protein: 40, carbs: 4, fat: 26, steps: ["Popeci teletinu.", "Umiješaj tartufni maslac.", "Posipaj parmezanom."] },
+        { name: "Teletina primavera", ingredients: ["Teleći file — 500 g", "Tikvica, grašak, mrkva", "Maslinovo ulje"], kcal: 360, protein: 38, carbs: 10, fat: 14, steps: ["Popeci teletinu.", "Dodaj sitno povrće.", "Začini uljem, solju i paprom."] }
+      ]
+    },
+    svinjetina: {
+      riza: [
+        { name: "Svinjetina havajski stil s ananasom", ingredients: ["Svinjski file — 600 g", "Ananas — 200 g", "Slatko-kiseli umak"], kcal: 460, protein: 38, carbs: 20, fat: 20, steps: ["Svinjetinu izreži na kocke, popeci.", "Dodaj ananas.", "Zalij slatko-kiselim umakom, kuhaj 5-8 min."] },
+        { name: "Svinjski curry", ingredients: ["Svinjetina — 600 g", "Curry pasta — 2 žlice", "Kokosovo mlijeko — 300 ml"], kcal: 460, protein: 36, carbs: 10, fat: 28, steps: ["Popeci svinjetinu.", "Dodaj curry pastu.", "Zalij kokosovim mlijekom, kuhaj 20 min."] },
+        { name: "Svinjetina jerk (jamajčanski stil)", ingredients: ["Svinjski file — 600 g", "Jerk začin (čili, cimet, klinčić)", "Limeta"], kcal: 420, protein: 38, carbs: 6, fat: 20, steps: ["Svinjetinu marinira u jerk začinu i limeti 15 min.", "Popeci na jakoj vatri dok ne porumeni.", "Kratko odstoji prije rezanja."] },
+        { name: "Svinjetina s kikirikijem (satay stil)", ingredients: ["Svinjetina — 600 g", "Maslac od kikirikija", "Kokosovo mlijeko — 150 ml"], kcal: 440, protein: 36, carbs: 8, fat: 26, steps: ["Popeci svinjetinu.", "Umiješaj maslac od kikirikija.", "Zalij kokosovim mlijekom, kuhaj 10 min."] },
+        { name: "Svinjski medaljoni sa senfom i medom", ingredients: ["Svinjski file — 600 g", "Senf, med", "Vrhnje — 100 ml"], kcal: 460, protein: 38, carbs: 12, fat: 26, steps: ["Popeci medaljone.", "Premaži senfom i medom.", "Zalij vrhnjem, kuhaj 5 min."] },
+        { name: "Svinjska jambalaya", ingredients: ["Svinjetina — 500 g", "Kobasica — 200 g", "Paprika, pasirana rajčica"], kcal: 460, protein: 36, carbs: 14, fat: 24, steps: ["Popeci svinjetinu i kobasicu.", "Dodaj povrće.", "Zalij rajčicom, kuhaj 15 min."] },
+        { name: "Svinjetina korma", ingredients: ["Svinjetina — 600 g", "Jogurt — 150 g", "Bademi mljeveni, curry začini blagi"], kcal: 440, protein: 36, carbs: 10, fat: 26, steps: ["Popeci svinjetinu s lukom.", "Dodaj jogurt i bademe.", "Kuhaj poklopljeno 20 min."] },
+        { name: "Svinjetina wok s povrćem", ingredients: ["Svinjetina (trakice) — 600 g", "Mješano povrće — 400 g", "Soja umak"], kcal: 380, protein: 38, carbs: 14, fat: 14, steps: ["Poprži svinjetinu na jakom ulju, izvadi.", "Poprži povrće.", "Vrati meso, začini soja umakom."] },
+        { name: "Svinjetina burrito bowl", ingredients: ["Svinjetina — 600 g", "Crni grah, paprika", "Meksički začini"], kcal: 440, protein: 36, carbs: 16, fat: 22, steps: ["Popeci svinjetinu s meksičkim začinima.", "Dodaj papriku i grah.", "Kuhaj 10 min."] },
+        { name: "Svinjetina s mangom i čilijem", ingredients: ["Svinjetina — 600 g", "Mango", "Čili, limeta"], kcal: 420, protein: 36, carbs: 14, fat: 18, steps: ["Popeci svinjetinu.", "Dodaj narezani mango i čili.", "Zalij limetom, kuhaj 8 min."] }
+      ],
+      krumpir: [
+        { name: "Pečena svinjetina (njemački stil)", ingredients: ["Svinjski but — 900 g", "Kim, češnjak", "Pivo — 100 ml"], kcal: 480, protein: 42, carbs: 6, fat: 28, steps: ["Zagrij pećnicu na 190°C.", "Svinjetinu natrljaj kimom i češnjakom.", "Peci uz zalijevanje pivom ~1h15min."] },
+        { name: "Svinjski kotlet s umakom od senfa", ingredients: ["Svinjski kotlet — 700 g", "Senf", "Vrhnje — 150 ml"], kcal: 460, protein: 40, carbs: 6, fat: 28, steps: ["Popeci kotlete sa svake strane.", "Umiješaj senf.", "Zalij vrhnjem, kuhaj 8 min."] },
+        { name: "Svinjetina s gljivama i senfom", ingredients: ["Svinjski file — 600 g", "Gljive — 200 g", "Senf"], kcal: 440, protein: 38, carbs: 6, fat: 24, steps: ["Popeci svinjetinu i gljive.", "Umiješaj senf.", "Kuhaj 8 min."] },
+        { name: "Svinjetina s kiselim zeljem", ingredients: ["Svinjski but — 700 g", "Kiselo zelje — 400 g", "Kim"], kcal: 440, protein: 40, carbs: 8, fat: 22, steps: ["Popeci svinjetinu.", "Dodaj kiselo zelje i kim.", "Pirjaj poklopljeno 40 min."] },
+        { name: "Svinjetina u pivu pirjana", ingredients: ["Svinjetina — 700 g", "Pivo — 300 ml", "Luk, senf"], kcal: 440, protein: 40, carbs: 8, fat: 20, steps: ["Popeci svinjetinu s lukom.", "Zalij pivom i senfom.", "Pirjaj poklopljeno 45 min."] },
+        { name: "Svinjski ražnjići", ingredients: ["Svinjetina (kocke) — 700 g", "Paprika, luk", "Začini za roštilj"], kcal: 420, protein: 40, carbs: 6, fat: 20, steps: ["Svinjetinu i povrće nabodi na ražnjiće.", "Marinira 15 min u začinima.", "Ispeci na roštilju ili tavi grill."] },
+        { name: "Svinjetina s jabukama i cimetom", ingredients: ["Svinjski file — 700 g", "Jabuka — 2 kom", "Cimet"], kcal: 420, protein: 38, carbs: 14, fat: 18, steps: ["Popeci svinjetinu.", "Dodaj narezane jabuke i cimet.", "Pirjaj 10-15 min."] },
+        { name: "Svinjska pečenica s češnjakom i majčinom dušicom", ingredients: ["Svinjska pečenica — 800 g", "Češnjak", "Majčina dušica"], kcal: 440, protein: 40, carbs: 4, fat: 22, steps: ["Zagrij pećnicu na 190°C.", "Natrljaj pečenicu češnjakom i biljem.", "Peci ~1h."] },
+        { name: "Svinjetina s prazilukom i vrhnjem", ingredients: ["Svinjski file — 600 g", "Praziluk — 2 kom", "Vrhnje — 150 ml"], kcal: 440, protein: 38, carbs: 8, fat: 22, steps: ["Popeci svinjetinu.", "Dodaj praziluk.", "Zalij vrhnjem, kuhaj 10 min."] },
+        { name: "Svinjski file u tijestu (wellington stil)", ingredients: ["Svinjski file — 700 g", "Lisnato tijesto", "Gljive"], kcal: 500, protein: 38, carbs: 20, fat: 28, steps: ["Popeci file i nasjeckane gljive.", "Zamotaj u lisnato tijesto.", "Peci u pećnici na 200°C 25-30 min."] }
+      ],
+      palenta: [
+        { name: "Svinjski gulaš", ingredients: ["Svinjetina za gulaš — 700 g", "Luk", "Mljevena paprika"], kcal: 420, protein: 38, carbs: 8, fat: 20, steps: ["Popeci svinjetinu s lukom.", "Dodaj papriku.", "Pirjaj poklopljeno 50 min."] },
+        { name: "Svinjetina u umaku od gljiva", ingredients: ["Svinjski file — 500 g", "Gljive — 250 g", "Vrhnje — 150 ml"], kcal: 460, protein: 36, carbs: 6, fat: 28, steps: ["Popeci svinjetinu i gljive.", "Zalij vrhnjem.", "Kuhaj 10 min."] },
+        { name: "Svinjski kotlet pečen sa sirom", ingredients: ["Svinjski kotlet — 700 g", "Sir — 150 g", "Rajčica"], kcal: 480, protein: 42, carbs: 5, fat: 30, steps: ["Popeci kotlete.", "Prekrij sirom i rajčicom.", "Zapeci u pećnici 10 min na 200°C."] },
+        { name: "Svinjetina s crvenim vinom pirjana", ingredients: ["Svinjetina — 700 g", "Crno vino — 200 ml", "Luk"], kcal: 420, protein: 38, carbs: 8, fat: 18, steps: ["Popeci svinjetinu s lukom.", "Zalij vinom.", "Pirjaj poklopljeno 1h."] },
+        { name: "Svinjetina s kobasicom i paprikom", ingredients: ["Svinjetina — 500 g", "Kobasica — 200 g", "Paprika"], kcal: 480, protein: 36, carbs: 8, fat: 32, steps: ["Popeci kobasicu i svinjetinu.", "Dodaj papriku.", "Pirjaj 20 min."] },
+        { name: "Svinjetina s kupusom pirjana", ingredients: ["Svinjetina — 600 g", "Kupus — 400 g", "Mljevena paprika"], kcal: 420, protein: 36, carbs: 10, fat: 20, steps: ["Popeci svinjetinu.", "Dodaj kupus i papriku.", "Pirjaj poklopljeno 40 min."] },
+        { name: "Svinjetina s pancetom i lukom", ingredients: ["Svinjski file — 500 g", "Panceta — 100 g", "Luk"], kcal: 460, protein: 38, carbs: 6, fat: 28, steps: ["Popeci pancetu.", "Dodaj svinjetinu i luk.", "Pirjaj 20 min."] },
+        { name: "Svinjetina leteha stil", ingredients: ["Svinjetina — 600 g", "Paprika", "Pasirana rajčica"], kcal: 400, protein: 36, carbs: 10, fat: 18, steps: ["Popeci svinjetinu.", "Dodaj papriku.", "Zalij rajčicom, pirjaj 25 min."] },
+        { name: "Svinjski ćevapi", ingredients: ["Mljevena svinjetina — 600 g", "Luk", "Začini za ćevape"], kcal: 460, protein: 36, carbs: 4, fat: 32, steps: ["Umijesi mljevenu svinjetinu sa začinima.", "Oblikuj ćevape.", "Ispeci na roštilju ili tavi grill."] },
+        { name: "Svinjetina s medom i senfom pečena", ingredients: ["Svinjetina — 700 g", "Med, senf", "Češnjak"], kcal: 440, protein: 38, carbs: 12, fat: 20, steps: ["Zagrij pećnicu na 200°C.", "Premaži svinjetinu medom, senfom i češnjakom.", "Peci 35-40 min."] }
+      ],
+      tjestenina: [
+        { name: "Svinjetina carbonara", ingredients: ["Panceta — 150 g", "Jaja — 3 kom", "Parmezan — 80 g"], kcal: 500, protein: 30, carbs: 6, fat: 36, steps: ["Popeci pancetu do hrskavosti.", "Skini s vatre, umiješaj jaja s parmezanom.", "Brzo promiješaj za kremasti umak."] },
+        { name: "Svinjetina bolognese", ingredients: ["Mljevena svinjetina — 500 g", "Luk, mrkva, celer", "Pasirana rajčica"], kcal: 420, protein: 34, carbs: 10, fat: 22, steps: ["Popeci povrće, dodaj mljevenu svinjetinu.", "Popeci dok ne porumeni.", "Zalij rajčicom, kuhaj poklopljeno 30 min."] },
+        { name: "Svinjetina s crnim vinom i lovorom", ingredients: ["Svinjski file — 500 g", "Crno vino — 150 ml", "Lovorov list"], kcal: 400, protein: 36, carbs: 6, fat: 18, steps: ["Popeci svinjetinu.", "Zalij vinom, dodaj lovor.", "Pirjaj poklopljeno 20-25 min."] },
+        { name: "Svinjetina arrabbiata", ingredients: ["Svinjski file — 500 g", "Pasirana rajčica — 400 g", "Čili"], kcal: 400, protein: 36, carbs: 8, fat: 18, steps: ["Popeci svinjetinu s čilijem.", "Zalij rajčicom.", "Kuhaj poklopljeno 20 min."] },
+        { name: "Svinjetina s tikvicama i limunom", ingredients: ["Svinjski file — 500 g", "Tikvica — 2 kom", "Limun"], kcal: 360, protein: 38, carbs: 8, fat: 14, steps: ["Popeci svinjetinu.", "Dodaj narezanu tikvicu.", "Zalij limunom, kuhaj 8 min."] },
+        { name: "Svinjetina s pestom", ingredients: ["Svinjski file — 500 g", "Pesto — 100 g", "Pinjoli"], kcal: 440, protein: 38, carbs: 5, fat: 26, steps: ["Popeci svinjetinu.", "Umiješaj pesto.", "Posipaj pinjolima."] },
+        { name: "Svinjetina s jabukama i kremom", ingredients: ["Svinjski file — 500 g", "Jabuka", "Vrhnje — 150 ml"], kcal: 440, protein: 36, carbs: 12, fat: 24, steps: ["Popeci svinjetinu.", "Dodaj narezanu jabuku.", "Zalij vrhnjem, kuhaj 10 min."] },
+        { name: "Svinjetina alla norma stil", ingredients: ["Svinjski file — 500 g", "Patlidžan", "Pasirana rajčica"], kcal: 400, protein: 36, carbs: 10, fat: 18, steps: ["Popeci patlidžan, izvadi.", "Popeci svinjetinu.", "Zalij rajčicom, vrati patlidžan, kuhaj 15 min."] },
+        { name: "Svinjetina s graškom i pršutom", ingredients: ["Svinjski file — 500 g", "Grašak — 200 g", "Pršut — 80 g"], kcal: 420, protein: 38, carbs: 8, fat: 20, steps: ["Popeci pršut i svinjetinu.", "Dodaj grašak.", "Kuhaj 5-8 min."] },
+        { name: "Svinjetina scampi stil", ingredients: ["Svinjski file — 500 g", "Bijelo vino — 100 ml", "Češnjak, maslac"], kcal: 420, protein: 38, carbs: 4, fat: 22, steps: ["Popeci svinjetinu s češnjakom.", "Zalij vinom.", "Umiješaj maslac na kraju."] }
+      ]
+    },
+    junetina: {
+      riza: [
+        { name: "Juneći rižoto", ingredients: ["Junetina (narezana) — 500 g", "Goveđi temeljac", "Bijelo vino, parmezan"], kcal: 440, protein: 36, carbs: 12, fat: 20, steps: ["Popeci junetinu, izvadi.", "Na ulju kratko propirjaj, zalij vinom.", "Vrati meso, zalij temeljcem, umiješaj parmezan."] },
+        { name: "Junetina stroganoff", ingredients: ["Junetina (trakice) — 600 g", "Vrhnje — 150 ml", "Gljive, senf"], kcal: 460, protein: 38, carbs: 8, fat: 28, steps: ["Poprži junetinu na jakom ulju.", "Dodaj gljive.", "Zalij vrhnjem i senfom, kuhaj 8 min."] },
+        { name: "Junetina curry", ingredients: ["Junetina — 600 g", "Curry pasta", "Kokosovo mlijeko — 300 ml"], kcal: 460, protein: 36, carbs: 10, fat: 28, steps: ["Popeci junetinu.", "Dodaj curry pastu.", "Zalij kokosovim mlijekom, kuhaj 25 min."] },
+        { name: "Junetina teriyaki", ingredients: ["Junetina (trakice) — 600 g", "Teriyaki umak", "Sezam"], kcal: 400, protein: 38, carbs: 12, fat: 16, steps: ["Poprži junetinu na jakom ulju.", "Zalij teriyaki umakom.", "Kuhaj 5 min, posipaj sezamom."] },
+        { name: "Junetina wok s povrćem", ingredients: ["Junetina (trakice) — 600 g", "Mješano povrće — 400 g", "Soja umak"], kcal: 400, protein: 38, carbs: 14, fat: 16, steps: ["Poprži junetinu, izvadi.", "Poprži povrće.", "Vrati meso, začini soja umakom."] },
+        { name: "Junetina korma", ingredients: ["Junetina — 600 g", "Jogurt", "Bademi mljeveni, curry začini blagi"], kcal: 440, protein: 36, carbs: 10, fat: 26, steps: ["Popeci junetinu s lukom.", "Dodaj jogurt i bademe.", "Kuhaj poklopljeno 25 min."] },
+        { name: "Junetina s gljivama u umaku od vrhnja", ingredients: ["Junetina — 500 g", "Gljive — 250 g", "Vrhnje — 150 ml"], kcal: 460, protein: 38, carbs: 6, fat: 28, steps: ["Popeci junetinu i gljive.", "Zalij vrhnjem.", "Kuhaj 10 min."] },
+        { name: "Junetina fajita", ingredients: ["Junetina (trakice) — 600 g", "Paprika, luk", "Fajita začin"], kcal: 380, protein: 40, carbs: 8, fat: 16, steps: ["Junetinu marinira u fajita začinu.", "Poprži s paprikom i lukom.", "Poslužiti vruće."] },
+        { name: "Junetina biryani stil", ingredients: ["Junetina — 600 g", "Jogurt", "Biryani začini"], kcal: 440, protein: 38, carbs: 14, fat: 20, steps: ["Junetinu marinira u jogurtu i začinima.", "Popeci s lukom.", "Poklopljeno pirjaj 20 min."] },
+        { name: "Junetina jambalaya", ingredients: ["Junetina — 500 g", "Kobasica", "Paprika, pasirana rajčica"], kcal: 460, protein: 36, carbs: 14, fat: 24, steps: ["Popeci junetinu i kobasicu.", "Dodaj povrće.", "Zalij rajčicom, kuhaj 15 min."] }
+      ],
+      krumpir: [
+        { name: "Pečena junetina", ingredients: ["Juneći but — 900 g", "Ružmarin", "Češnjak"], kcal: 440, protein: 44, carbs: 4, fat: 20, steps: ["Zagrij pećnicu na 190°C.", "Junetinu natrljaj biljem i češnjakom.", "Peci ~1h."] },
+        { name: "Juneći gulaš", ingredients: ["Junetina za gulaš — 700 g", "Luk", "Mljevena paprika"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci junetinu s lukom.", "Dodaj papriku.", "Pirjaj poklopljeno 1h 30min."] },
+        { name: "Junetina wellington stil", ingredients: ["Juneći file — 700 g", "Lisnato tijesto", "Gljive"], kcal: 520, protein: 40, carbs: 20, fat: 30, steps: ["Popeci file i nasjeckane gljive.", "Zamotaj u lisnato tijesto.", "Peci na 200°C 25-30 min."] },
+        { name: "Junetina u umaku od paprike i vrhnja", ingredients: ["Juneći file — 500 g", "Slatka paprika mljevena", "Vrhnje — 150 ml"], kcal: 440, protein: 38, carbs: 6, fat: 24, steps: ["Popeci junetinu.", "Dodaj mljevenu papriku.", "Zalij vrhnjem, kuhaj 8 min."] },
+        { name: "Junetina s gljivama pečena", ingredients: ["Juneći file — 600 g", "Gljive — 250 g", "Maslac"], kcal: 420, protein: 40, carbs: 6, fat: 20, steps: ["Popeci junetinu.", "Dodaj gljive.", "Popirjaj s maslacem 8-10 min."] },
+        { name: "Junetina u pivu pirjana", ingredients: ["Junetina — 700 g", "Pivo — 300 ml", "Luk"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci junetinu s lukom.", "Zalij pivom.", "Pirjaj poklopljeno 1h."] },
+        { name: "Junetina sa začinskim maslacem", ingredients: ["Juneći odrezak — 600 g", "Maslac s biljem", "Češnjak"], kcal: 440, protein: 42, carbs: 3, fat: 24, steps: ["Popeci odreske na jakoj vatri.", "Stavi komad maslaca s biljem na vrh.", "Kratko odstoji prije rezanja."] },
+        { name: "Juneća rolada punjena povrćem", ingredients: ["Juneći file — 600 g", "Mrkva, tikvica", "Slanina"], kcal: 460, protein: 40, carbs: 6, fat: 26, steps: ["File istanji, poslaži povrće i slaninu, zarolaj.", "Popeci sa svih strana.", "Dopeci u pećnici 20 min."] },
+        { name: "Junetina s kupusom i slaninom", ingredients: ["Junetina — 700 g", "Kiseli kupus — 300 g", "Slanina — 100 g"], kcal: 440, protein: 38, carbs: 8, fat: 24, steps: ["Popeci slaninu i junetinu.", "Dodaj kupus.", "Pirjaj poklopljeno 40 min."] },
+        { name: "Junetina s krumpir pireom i senfom", ingredients: ["Junetina — 600 g", "Senf", "Vrhnje — 100 ml"], kcal: 420, protein: 40, carbs: 6, fat: 20, steps: ["Popeci junetinu.", "Umiješaj senf.", "Zalij vrhnjem, kuhaj 8 min."] }
+      ],
+      palenta: [
+        { name: "Junetina s crvenom paprikom i lukom", ingredients: ["Junetina za gulaš — 700 g", "Luk", "Mljevena paprika"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci junetinu s lukom.", "Dodaj papriku.", "Pirjaj poklopljeno 1h 30min."] },
+        { name: "Junetina s lukom i senfom", ingredients: ["Juneći file — 500 g", "Luk pirjani — 2 kom", "Senf"], kcal: 420, protein: 38, carbs: 8, fat: 20, steps: ["Popeci junetinu.", "Dodaj pirjani luk.", "Umiješaj senf, kuhaj 5 min."] },
+        { name: "Junetina osso buco stil", ingredients: ["Juneća koljenica — 800 g", "Mrkva, celer", "Bijelo vino"], kcal: 440, protein: 44, carbs: 6, fat: 20, steps: ["Popeci koljenicu.", "Dodaj povrće, zalij vinom.", "Pirjaj poklopljeno 1.5-2h."] },
+        { name: "Junetina Barolo stil", ingredients: ["Junetina — 700 g", "Crno vino — 250 ml", "Luk, mrkva"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci junetinu s povrćem.", "Zalij vinom.", "Pirjaj poklopljeno 1.5-2h."] },
+        { name: "Junetina s rajčicom i maslinama", ingredients: ["Juneći file — 500 g", "Pasirana rajčica — 400 g", "Masline"], kcal: 400, protein: 38, carbs: 8, fat: 18, steps: ["Popeci junetinu.", "Zalij rajčicom.", "Dodaj masline, pirjaj 20-25 min."] },
+        { name: "Juneći perkelt", ingredients: ["Junetina — 600 g", "Vrhnje — 150 ml", "Mljevena paprika, luk"], kcal: 440, protein: 38, carbs: 6, fat: 24, steps: ["Popeci junetinu s lukom i paprikom.", "Zalij vodom, pirjaj 45 min.", "Umiješaj vrhnje na kraju."] },
+        { name: "Junetina s pancetom i lukom", ingredients: ["Juneći file — 500 g", "Panceta — 100 g", "Luk"], kcal: 460, protein: 38, carbs: 6, fat: 28, steps: ["Popeci pancetu.", "Dodaj junetinu i luk.", "Pirjaj 20 min."] },
+        { name: "Junetina s jabukama i cimetom", ingredients: ["Junetina — 600 g", "Jabuka — 2 kom", "Cimet"], kcal: 420, protein: 38, carbs: 14, fat: 18, steps: ["Popeci junetinu.", "Dodaj narezane jabuke i cimet.", "Pirjaj 15-20 min."] },
+        { name: "Junetina s kestenjem pirjana", ingredients: ["Junetina — 600 g", "Kesten kuhani — 200 g", "Luk"], kcal: 440, protein: 38, carbs: 16, fat: 20, steps: ["Popeci junetinu s lukom.", "Dodaj kesten.", "Pirjaj poklopljeno 40 min."] },
+        { name: "Junetina brudet stil", ingredients: ["Junetina — 600 g", "Pasirana rajčica — 300 g", "Bijelo vino"], kcal: 400, protein: 38, carbs: 8, fat: 16, steps: ["Popeci junetinu.", "Zalij vinom pa rajčicom.", "Pirjaj poklopljeno 25-30 min."] }
+      ],
+      tjestenina: [
+        { name: "Junetina bolognese", ingredients: ["Mljevena junetina — 500 g", "Luk, mrkva, celer", "Pasirana rajčica"], kcal: 420, protein: 36, carbs: 10, fat: 20, steps: ["Popeci povrće, dodaj mljevenu junetinu.", "Popeci dok ne porumeni.", "Zalij rajčicom, kuhaj poklopljeno 30 min."] },
+        { name: "Junetina s kaparima i limunom", ingredients: ["Juneći file — 500 g", "Kapari", "Limun, maslac"], kcal: 400, protein: 40, carbs: 4, fat: 20, steps: ["Popeci junetinu.", "Zalij limunom i kaparima.", "Umiješaj maslac."] },
+        { name: "Junetina alla puttanesca", ingredients: ["Juneći file — 500 g", "Masline, kapari", "Inćuni"], kcal: 400, protein: 38, carbs: 6, fat: 20, steps: ["Popeci junetinu.", "Dodaj masline, kapare i inćune.", "Kuhaj 10-15 min."] },
+        { name: "Junetina s brokulom i češnjakom", ingredients: ["Juneći file — 500 g", "Brokula — 300 g", "Češnjak"], kcal: 360, protein: 38, carbs: 8, fat: 14, steps: ["Popeci junetinu.", "Kratko blanširaj brokulu.", "Popirjaj zajedno s češnjakom."] },
+        { name: "Junetina carbonara stil", ingredients: ["Junetina — 500 g", "Panceta", "Jaja — 2 kom, parmezan"], kcal: 480, protein: 40, carbs: 6, fat: 28, steps: ["Popeci pancetu i junetinu.", "Skini s vatre, umiješaj jaja s parmezanom.", "Brzo promiješaj za kremasti umak."] },
+        { name: "Junetina arrabbiata", ingredients: ["Juneći file — 500 g", "Pasirana rajčica — 400 g", "Čili"], kcal: 400, protein: 38, carbs: 8, fat: 18, steps: ["Popeci junetinu s čilijem.", "Zalij rajčicom.", "Kuhaj poklopljeno 20 min."] },
+        { name: "Junetina s graškom i pancetom", ingredients: ["Juneći file — 500 g", "Grašak — 200 g", "Panceta — 80 g"], kcal: 420, protein: 38, carbs: 8, fat: 20, steps: ["Popeci pancetu i junetinu.", "Dodaj grašak.", "Kuhaj 5-8 min."] },
+        { name: "Junetina s pestom", ingredients: ["Juneći file — 500 g", "Pesto — 100 g", "Pinjoli"], kcal: 440, protein: 38, carbs: 5, fat: 26, steps: ["Popeci junetinu.", "Umiješaj pesto.", "Posipaj pinjolima."] },
+        { name: "Junetina primavera", ingredients: ["Juneći file — 500 g", "Tikvica, grašak, mrkva"], kcal: 360, protein: 38, carbs: 10, fat: 14, steps: ["Popeci junetinu.", "Dodaj sitno povrće.", "Začini uljem, solju i paprom."] },
+        { name: "Junetina s tartufnim maslacem", ingredients: ["Juneći file — 500 g", "Tartufni maslac", "Parmezan"], kcal: 440, protein: 40, carbs: 4, fat: 26, steps: ["Popeci junetinu.", "Umiješaj tartufni maslac.", "Posipaj parmezanom."] }
+      ]
+    },
+    govedina: {
+      riza: [
+        { name: "Goveđi rižoto", ingredients: ["Govedina (narezana) — 500 g", "Crno vino — 100 ml", "Goveđi temeljac"], kcal: 440, protein: 36, carbs: 12, fat: 20, steps: ["Popeci govedinu, izvadi.", "Zalij vinom.", "Vrati meso, zalij temeljcem, kuhaj 15 min."] },
+        { name: "Govedina teriyaki", ingredients: ["Govedina (trakice) — 600 g", "Teriyaki umak", "Sezam"], kcal: 400, protein: 38, carbs: 12, fat: 16, steps: ["Poprži govedinu.", "Zalij teriyaki umakom.", "Kuhaj 5 min, posipaj sezamom."] },
+        { name: "Govedina curry (ljuti)", ingredients: ["Govedina — 600 g", "Curry pasta ljuta", "Kokosovo mlijeko — 300 ml"], kcal: 460, protein: 36, carbs: 10, fat: 28, steps: ["Popeci govedinu.", "Dodaj curry pastu.", "Zalij kokosovim mlijekom, kuhaj 30 min."] },
+        { name: "Govedina wok s povrćem", ingredients: ["Govedina (trakice) — 600 g", "Mješano povrće — 400 g", "Soja umak"], kcal: 400, protein: 38, carbs: 14, fat: 16, steps: ["Poprži govedinu, izvadi.", "Poprži povrće.", "Vrati meso, začini soja umakom."] },
+        { name: "Govedina fajita", ingredients: ["Govedina (trakice) — 600 g", "Paprika, luk", "Fajita začin"], kcal: 380, protein: 40, carbs: 8, fat: 16, steps: ["Govedinu marinira u fajita začinu.", "Poprži s paprikom i lukom.", "Poslužiti vruće."] },
+        { name: "Govedina korma", ingredients: ["Govedina — 600 g", "Jogurt", "Bademi mljeveni, curry začini"], kcal: 440, protein: 36, carbs: 10, fat: 26, steps: ["Popeci govedinu s lukom.", "Dodaj jogurt i bademe.", "Kuhaj poklopljeno 30 min."] },
+        { name: "Govedina jambalaya", ingredients: ["Govedina — 500 g", "Kobasica", "Paprika, pasirana rajčica"], kcal: 460, protein: 36, carbs: 14, fat: 24, steps: ["Popeci govedinu i kobasicu.", "Dodaj povrće.", "Zalij rajčicom, kuhaj 15 min."] },
+        { name: "Govedina burrito bowl", ingredients: ["Govedina — 600 g", "Crni grah, paprika", "Meksički začini"], kcal: 440, protein: 36, carbs: 16, fat: 22, steps: ["Popeci govedinu s meksičkim začinima.", "Dodaj papriku i grah.", "Kuhaj 10 min."] },
+        { name: "Govedina stroganoff", ingredients: ["Govedina (trakice) — 600 g", "Vrhnje — 150 ml", "Gljive"], kcal: 460, protein: 38, carbs: 8, fat: 28, steps: ["Poprži govedinu.", "Dodaj gljive.", "Zalij vrhnjem, kuhaj 8 min."] },
+        { name: "Govedina biryani stil", ingredients: ["Govedina — 600 g", "Jogurt", "Biryani začini"], kcal: 440, protein: 38, carbs: 14, fat: 20, steps: ["Govedinu marinira u jogurtu i začinima.", "Popeci s lukom.", "Poklopljeno pirjaj 25 min."] }
+      ],
+      krumpir: [
+        { name: "Pečena govedina", ingredients: ["Goveđi but — 900 g", "Ružmarin", "Češnjak"], kcal: 440, protein: 44, carbs: 4, fat: 20, steps: ["Zagrij pećnicu na 190°C.", "Govedinu natrljaj biljem i češnjakom.", "Peci ~1h15min."] },
+        { name: "Goveđi gulaš", ingredients: ["Govedina za gulaš — 700 g", "Luk", "Mljevena paprika"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci govedinu s lukom.", "Dodaj papriku.", "Pirjaj poklopljeno 1h 30min."] },
+        { name: "Govedina wellington stil", ingredients: ["Goveđi file — 700 g", "Lisnato tijesto", "Gljive"], kcal: 520, protein: 40, carbs: 20, fat: 30, steps: ["Popeci file i nasjeckane gljive.", "Zamotaj u lisnato tijesto.", "Peci na 200°C 25-30 min."] },
+        { name: "Govedina BBQ", ingredients: ["Govedina — 700 g", "BBQ umak — 150 ml", "Luk"], kcal: 460, protein: 40, carbs: 14, fat: 20, steps: ["Popeci govedinu s lukom.", "Premaži BBQ umakom.", "Pirjaj poklopljeno 40-50 min."] },
+        { name: "Govedina u pivu pirjana", ingredients: ["Govedina — 700 g", "Pivo — 300 ml", "Luk"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci govedinu s lukom.", "Zalij pivom.", "Pirjaj poklopljeno 1h."] },
+        { name: "Govedina u umaku od senfa i meda", ingredients: ["Goveđi file — 500 g", "Senf, med", "Maslac"], kcal: 420, protein: 40, carbs: 10, fat: 18, steps: ["Popeci govedinu.", "Umiješaj senf i med.", "Kuhaj 5 min s maslacem."] },
+        { name: "Govedina s gljivama pečena", ingredients: ["Goveđi file — 600 g", "Gljive — 250 g", "Maslac"], kcal: 420, protein: 40, carbs: 6, fat: 20, steps: ["Popeci govedinu.", "Dodaj gljive.", "Popirjaj s maslacem 8-10 min."] },
+        { name: "Govedina sa začinskim maslacem", ingredients: ["Goveđi odrezak — 600 g", "Maslac s biljem", "Češnjak"], kcal: 440, protein: 42, carbs: 3, fat: 24, steps: ["Popeci odreske na jakoj vatri.", "Stavi komad maslaca s biljem na vrh.", "Kratko odstoji prije rezanja."] },
+        { name: "Goveđa rolada punjena povrćem", ingredients: ["Goveđi file — 600 g", "Mrkva, tikvica", "Slanina"], kcal: 460, protein: 40, carbs: 6, fat: 26, steps: ["File istanji, poslaži povrće i slaninu, zarolaj.", "Popeci sa svih strana.", "Dopeci u pećnici 20 min."] },
+        { name: "Govedina s prazilukom i vrhnjem", ingredients: ["Govedina — 700 g", "Praziluk — 2 kom", "Vrhnje — 150 ml"], kcal: 440, protein: 40, carbs: 8, fat: 22, steps: ["Popeci govedinu.", "Dodaj narezani praziluk.", "Zalij vrhnjem, kuhaj 10 min."] }
+      ],
+      palenta: [
+        { name: "Govedina s crvenom paprikom i lukom", ingredients: ["Govedina za gulaš — 700 g", "Luk", "Mljevena paprika"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci govedinu s lukom.", "Dodaj papriku.", "Pirjaj poklopljeno 1h 30min."] },
+        { name: "Govedina u umaku od gljiva i vrhnja", ingredients: ["Goveđi file — 500 g", "Gljive — 250 g", "Vrhnje — 150 ml"], kcal: 460, protein: 38, carbs: 6, fat: 28, steps: ["Popeci govedinu i gljive.", "Zalij vrhnjem.", "Kuhaj 10 min."] },
+        { name: "Govedina osso buco stil", ingredients: ["Goveđa koljenica — 800 g", "Mrkva, celer", "Bijelo vino"], kcal: 440, protein: 44, carbs: 6, fat: 20, steps: ["Popeci koljenicu.", "Dodaj povrće, zalij vinom.", "Pirjaj poklopljeno 2h."] },
+        { name: "Govedina Burgundy stil", ingredients: ["Govedina — 700 g", "Crno vino — 250 ml", "Luk, mrkva"], kcal: 420, protein: 40, carbs: 8, fat: 18, steps: ["Popeci govedinu s povrćem.", "Zalij vinom.", "Pirjaj poklopljeno 2h."] },
+        { name: "Govedina s rajčicom i maslinama", ingredients: ["Goveđi file — 500 g", "Pasirana rajčica — 400 g", "Masline"], kcal: 400, protein: 38, carbs: 8, fat: 18, steps: ["Popeci govedinu.", "Zalij rajčicom.", "Dodaj masline, pirjaj 25 min."] },
+        { name: "Goveđi perkelt", ingredients: ["Govedina — 600 g", "Vrhnje — 150 ml", "Mljevena paprika, luk"], kcal: 440, protein: 38, carbs: 6, fat: 24, steps: ["Popeci govedinu s lukom i paprikom.", "Zalij vodom, pirjaj 50 min.", "Umiješaj vrhnje na kraju."] },
+        { name: "Govedina s pancetom i lukom", ingredients: ["Goveđi file — 500 g", "Panceta — 100 g", "Luk"], kcal: 460, protein: 38, carbs: 6, fat: 28, steps: ["Popeci pancetu.", "Dodaj govedinu i luk.", "Pirjaj 20 min."] },
+        { name: "Govedina s naranđastim umakom", ingredients: ["Govedina — 700 g", "Naranča — 2 kom", "Med"], kcal: 420, protein: 38, carbs: 14, fat: 16, steps: ["Popeci govedinu.", "Zalij sokom naranče i medom.", "Pirjaj poklopljeno 40 min."] },
+        { name: "Govedina s kestenjem pirjana", ingredients: ["Govedina — 600 g", "Kesten kuhani — 200 g", "Luk"], kcal: 440, protein: 38, carbs: 16, fat: 20, steps: ["Popeci govedinu s lukom.", "Dodaj kesten.", "Pirjaj poklopljeno 45 min."] },
+        { name: "Govedina brudet stil", ingredients: ["Govedina — 600 g", "Pasirana rajčica — 300 g", "Bijelo vino"], kcal: 400, protein: 38, carbs: 8, fat: 16, steps: ["Popeci govedinu.", "Zalij vinom pa rajčicom.", "Pirjaj poklopljeno 30 min."] }
+      ],
+      tjestenina: [
+        { name: "Govedina bolognese", ingredients: ["Mljevena govedina — 500 g", "Luk, mrkva, celer", "Pasirana rajčica"], kcal: 420, protein: 36, carbs: 10, fat: 20, steps: ["Popeci povrće, dodaj mljevenu govedinu.", "Popeci dok ne porumeni.", "Zalij rajčicom, kuhaj poklopljeno 40 min."] },
+        { name: "Govedina s kaparima i limunom", ingredients: ["Goveđi file — 500 g", "Kapari", "Limun, maslac"], kcal: 400, protein: 40, carbs: 4, fat: 20, steps: ["Popeci govedinu.", "Zalij limunom i kaparima.", "Umiješaj maslac."] },
+        { name: "Govedina alla puttanesca", ingredients: ["Goveđi file — 500 g", "Masline, kapari", "Inćuni"], kcal: 400, protein: 38, carbs: 6, fat: 20, steps: ["Popeci govedinu.", "Dodaj masline, kapare i inćune.", "Kuhaj 10-15 min."] },
+        { name: "Govedina s brokulom i češnjakom", ingredients: ["Goveđi file — 500 g", "Brokula — 300 g", "Češnjak"], kcal: 360, protein: 38, carbs: 8, fat: 14, steps: ["Popeci govedinu.", "Kratko blanširaj brokulu.", "Popirjaj zajedno s češnjakom."] },
+        { name: "Govedina carbonara stil", ingredients: ["Govedina — 500 g", "Panceta", "Jaja — 2 kom, parmezan"], kcal: 480, protein: 40, carbs: 6, fat: 28, steps: ["Popeci pancetu i govedinu.", "Skini s vatre, umiješaj jaja s parmezanom.", "Brzo promiješaj za kremasti umak."] },
+        { name: "Govedina arrabbiata", ingredients: ["Goveđi file — 500 g", "Pasirana rajčica — 400 g", "Čili"], kcal: 400, protein: 38, carbs: 8, fat: 18, steps: ["Popeci govedinu s čilijem.", "Zalij rajčicom.", "Kuhaj poklopljeno 20 min."] },
+        { name: "Govedina s graškom i pancetom", ingredients: ["Goveđi file — 500 g", "Grašak — 200 g", "Panceta — 80 g"], kcal: 420, protein: 38, carbs: 8, fat: 20, steps: ["Popeci pancetu i govedinu.", "Dodaj grašak.", "Kuhaj 5-8 min."] },
+        { name: "Govedina s pestom", ingredients: ["Goveđi file — 500 g", "Pesto — 100 g", "Pinjoli"], kcal: 440, protein: 38, carbs: 5, fat: 26, steps: ["Popeci govedinu.", "Umiješaj pesto.", "Posipaj pinjolima."] },
+        { name: "Govedina primavera", ingredients: ["Goveđi file — 500 g", "Tikvica, grašak, mrkva"], kcal: 360, protein: 38, carbs: 10, fat: 14, steps: ["Popeci govedinu.", "Dodaj sitno povrće.", "Začini uljem, solju i paprom."] },
+        { name: "Govedina s tartufnim maslacem", ingredients: ["Goveđi file — 500 g", "Tartufni maslac", "Parmezan"], kcal: 440, protein: 40, carbs: 4, fat: 26, steps: ["Popeci govedinu.", "Umiješaj tartufni maslac.", "Posipaj parmezanom."] }
+      ]
+    }
+  };
+
+  var PRILOG_ADD = {
+    riza: { kcal: 230, protein: 4, carbs: 50, fat: 1, ingredient: "Riža — 300 g", step: "Skuhaj rižu u posoljenoj vodi ili temeljcu dok ne omekša (~15-18 min), poslužiti uz meso." },
+    krumpir: { kcal: 180, protein: 3, carbs: 40, fat: 0, ingredient: "Krumpir — 700 g", step: "Krumpir operi, nareži i skuhaj u posoljenoj vodi (ili ispeci u pećnici uz malo ulja), poslužiti uz meso." },
+    palenta: { kcal: 200, protein: 4, carbs: 42, fat: 2, ingredient: "Kukuruzno brašno (palenta) — 250 g", step: "Skuhaj palentu u posoljenoj vodi uz stalno miješanje dok ne zgusne (~10 min), poslužiti uz meso." },
+    tjestenina: { kcal: 260, protein: 9, carbs: 52, fat: 1, ingredient: "Tjestenina — 300 g", step: "Skuhaj tjesteninu u posoljenoj vodi prema uputama na pakiranju, ocijedi i poslužiti uz meso." }
+  };
+
+  function getMealOptions(proteinKey, prilogKey) {
+    var list = (MEALS_MATRIX[proteinKey] && MEALS_MATRIX[proteinKey][prilogKey]) || [];
+    var padd = PRILOG_ADD[prilogKey] || PRILOG_ADD.riza;
+    return list.map(function (d) {
+      return {
+        name: d.name,
+        ingredients: d.ingredients.concat([padd.ingredient]),
+        kcal: d.kcal + padd.kcal,
+        protein: d.protein + padd.protein,
+        carbs: d.carbs + padd.carbs,
+        fat: d.fat + padd.fat,
+        steps: d.steps.concat([padd.step])
+      };
+    });
+  }
+
+  // Stilizirana ilustracija tanjura (kako bi jelo trebalo izgledati) — generirana
+  // parametarski iz odabranog mesa i priloga. Draft zamjena za pravu AI sliku
+  // dok backend/API za generiranje slika nije spojen.
+  var PROTEIN_TONES = {
+    piletina: { main: "#e0b374", dark: "#c99a5c" },
+    teletina: { main: "#d3937c", dark: "#b97862" },
+    svinjetina: { main: "#dda17f", dark: "#c28563" },
+    junetina: { main: "#a85c40", dark: "#8c4830" },
+    govedina: { main: "#8f4a35", dark: "#73392a" }
+  };
+  var PRILOG_TONES = { riza: "#f5efdd", krumpir: "#e0a857", palenta: "#eec84c", tjestenina: "#eddcae" };
+
+  function dishImageSVG(proteinKey, prilogKey) {
+    var pc = PROTEIN_TONES[proteinKey] || PROTEIN_TONES.piletina;
+    var sc = PRILOG_TONES[prilogKey] || PRILOG_TONES.riza;
+    var sideShape = "";
+    if (prilogKey === "riza") {
+      var grains = "";
+      for (var i = 0; i < 14; i++) {
+        var gx = 55 + (i % 5) * 9 + (i % 3);
+        var gy = 118 + Math.floor(i / 5) * 10;
+        grains += '<ellipse cx="' + gx + '" cy="' + gy + '" rx="5" ry="3" fill="' + sc + '" stroke="#e4dcc4" stroke-width="0.5" transform="rotate(' + (i * 13 % 40 - 20) + ' ' + gx + ' ' + gy + ')"/>';
+      }
+      sideShape = grains;
+    } else if (prilogKey === "krumpir") {
+      sideShape =
+        '<ellipse cx="62" cy="128" rx="15" ry="9" fill="' + sc + '" stroke="#b8863f" stroke-width="1" transform="rotate(-10 62 128)"/>' +
+        '<ellipse cx="82" cy="140" rx="15" ry="9" fill="' + sc + '" stroke="#b8863f" stroke-width="1" transform="rotate(8 82 140)"/>' +
+        '<ellipse cx="105" cy="132" rx="15" ry="9" fill="' + sc + '" stroke="#b8863f" stroke-width="1" transform="rotate(-4 105 132)"/>';
+    } else if (prilogKey === "palenta") {
+      sideShape = '<path d="M55 132 Q100 102 148 130 Q146 152 100 158 Q55 152 55 132Z" fill="' + sc + '" stroke="#d4ac2e" stroke-width="1"/>';
+    } else {
+      sideShape =
+        '<path d="M55 138 C68 118,88 152,102 128" stroke="' + sc + '" stroke-width="9" fill="none" stroke-linecap="round"/>' +
+        '<path d="M75 145 C90 122,108 150,120 122" stroke="' + sc + '" stroke-width="9" fill="none" stroke-linecap="round"/>' +
+        '<path d="M100 140 C115 120,130 148,145 126" stroke="' + sc + '" stroke-width="9" fill="none" stroke-linecap="round"/>';
+    }
+    return (
+      '<svg viewBox="0 0 200 200" width="100%" height="100%" role="img" aria-label="Ilustracija jela">' +
+        '<circle cx="100" cy="100" r="92" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="2"/>' +
+        '<circle cx="100" cy="100" r="80" fill="#ffffff" stroke="#eceae3" stroke-width="1"/>' +
+        sideShape +
+        '<ellipse cx="112" cy="92" rx="40" ry="25" fill="' + pc.main + '" stroke="' + pc.dark + '" stroke-width="2" transform="rotate(-14 112 92)"/>' +
+        '<ellipse cx="118" cy="86" rx="22" ry="10" fill="' + pc.dark + '" opacity="0.35" transform="rotate(-14 118 86)"/>' +
+        '<path d="M58 168 q9 -15 23 -7 q7 8 -3 12 q-14 5 -20 -5Z" fill="#3f7d3f"/>' +
+        '<path d="M64 166 q5 -8 12 -5" stroke="#2d5e2d" stroke-width="1.5" fill="none"/>' +
+      "</svg>"
+    );
+  }
+
+  /* =========================================================================
+   * STATE — dva odvojena računa. Firestore (accounts/matija, accounts/matea)
+   * je izvor istine i drži podatke trajno; state.accounts je lokalna kopija
+   * koju drži sinkroniziranu FIREBASE SYNC blok ispod (onSnapshot). Render
+   * funkcije rade jednako kao i prije — samo se sad mijenja odakle podaci
+   * dolaze, ne kako se prikazuju.
+   * =======================================================================*/
+  function uid() { return Math.random().toString(36).slice(2, 10); }
+
+  var state = {
+    accounts: {
+      matija: { id: "matija", name: "Matija", color: "var(--series-matija)", setup: null, entries: [], foodLog: [] },
+      matea: { id: "matea", name: "Matea", color: "var(--series-matea)", setup: null, entries: [], foodLog: [] }
+    },
+    currentAccountId: null,
+    sidebarOpen: false,
+    newEntryOpen: false,
+    activeTab: "dashboard",
+    chartMetric: "weight",
+    setupError: "",
+    entryError: "",
+    profileError: "",
+    mealModalOpen: false,
+    mealForm: { protein: "piletina", prilog: "riza" },
+    mealOptions: null,
+    mealOptionsMeta: null,
+    lastMeal: null,
+    cameraModalOpen: false,
+    cameraPhoto: null,
+    cameraEstimate: null,
+    syncReady: false,
+    syncError: null
+  };
+
+  function currentAccount() {
+    return state.currentAccountId ? state.accounts[state.currentAccountId] : null;
+  }
+
+  /* =========================================================================
+   * FIREBASE SYNC — anonimna prijava + pretplata (onSnapshot) na oba
+   * računa, tako da se promjene s bilo kojeg uređaja (tvog ili suprugina)
+   * pojave uživo na oba. Pisanja (saveAccount) prvo ažuriraju lokalni
+   * state za brz odziv, pa šalju izmjenu u Firestore; snapshot listener
+   * odmah zatim potvrdi/uskladi sa serverom.
+   * =======================================================================*/
+  var db = null;
+
+  function initFirebaseSync() {
+    if (typeof firebase === "undefined" || typeof FIREBASE_CONFIG === "undefined") {
+      state.syncError = "Firebase SDK se nije učitao (provjeri internetsku vezu).";
+      render();
+      return;
+    }
+    try {
+      firebase.initializeApp(FIREBASE_CONFIG);
+    } catch (e) {
+      // već inicijalizirano — u redu je, samo nastavi
+    }
+    db = firebase.firestore();
+    // Lokalni razvoj/testiranje preko Firebase emulatora (firebase emulators:start) —
+    // na pravom hostingu (GitHub Pages i sl.) ovo se nikad ne aktivira.
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+      try {
+        db.useEmulator("localhost", 8080);
+        firebase.auth().useEmulator("http://localhost:9099", { disableWarnings: true });
+      } catch (e) {}
+    }
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (!user) return;
+      state.syncReady = true;
+      ["matija", "matea"].forEach(function (accId) {
+        db.collection("accounts").doc(accId).onSnapshot(
+          function (doc) {
+            var data = doc.data() || {};
+            var acc = state.accounts[accId];
+            acc.setup = data.setup || null;
+            acc.entries = data.entries || [];
+            acc.foodLog = data.foodLog || [];
+            state.syncError = null;
+            render();
+          },
+          function (err) {
+            state.syncError = "Greška pri sinkronizaciji (" + accId + "): " + (err && err.message ? err.message : err);
+            render();
+          }
+        );
+      });
+      render();
+    });
+    firebase.auth().signInAnonymously().catch(function (err) {
+      state.syncError = "Prijava nije uspjela: " + (err && err.message ? err.message : err) +
+        ". Provjeri je li 'Anonymous' uključen u Firebase Console → Authentication → Sign-in method.";
+      render();
+    });
+  }
+
+  // Spremi djelomičnu izmjenu (patch) računa u Firestore. merge:true znači
+  // da se mijenjaju samo navedena polja, ostatak dokumenta ostaje netaknut.
+  function saveAccount(accId, patch) {
+    if (!db) { state.syncError = "Nema veze s bazom — izmjena nije spremljena."; render(); return; }
+    db.collection("accounts").doc(accId).set(patch, { merge: true }).catch(function (err) {
+      state.syncError = "Spremanje nije uspjelo: " + (err && err.message ? err.message : err);
+      render();
+    });
+  }
+
+  function arrayUnion(item) {
+    return firebase.firestore.FieldValue.arrayUnion(item);
+  }
+
+  var NAV_ITEMS = [
+    { id: "dashboard", label: "Dashboard", icon: "home" },
+    { id: "profil", label: "Profil", icon: "user" },
+    { id: "kalorije", label: "Kalorije", icon: "plus", clickAction: "open-camera" },
+    { id: "povijest", label: "Povijest", icon: "history" },
+    { id: "jelovnik", label: "Jelovnik", icon: "meal" }
+  ];
+
+  // Simulirana "AI" procjena kalorija sa slike tanjura — draft verzija bez
+  // stvarnog computer vision modela. Kad spojimo pravi AI (vision API preko
+  // backenda), ova funkcija se zamijeni stvarnom analizom slike; ostatak
+  // (popup, dnevni zbroj) ostaje isti.
+  function simulateFoodAnalysis() {
+    function rand(min, max) { return Math.round(min + Math.random() * (max - min)); }
+    return {
+      kcal: rand(350, 850),
+      protein: rand(15, 55),
+      carbs: rand(20, 90),
+      fat: rand(10, 40),
+      salt: +(0.5 + Math.random() * 2.5).toFixed(1)
+    };
+  }
+
+  /* =========================================================================
+   * RENDER: Header
+   * =======================================================================*/
+  function renderHeader() {
+    var acc = currentAccount();
+    var left = "";
+    var right = "";
+    if (acc && acc.setup) {
+      left = '<button class="icon-btn sidebar-trigger" data-action="toggle-sidebar" aria-label="Izbornik">' + icon("menu", 17) + "</button>";
+      right = '<span class="who-chip"><span class="dot" style="background:' + acc.color + '"></span>' + acc.name + "</span>";
+    }
+    return (
+      '<header class="app-header"><div class="wrap header-inner">' +
+        '<div class="brand">' +
+          left +
+          '<div class="brand-badge">' + icon("scale", 18) + "</div>" +
+          '<div><h1>KGTracker</h1><p>Zajedničko praćenje napretka</p></div>' +
+        "</div>" +
+        right +
+      "</div></header>"
+    );
+  }
+
+  /* =========================================================================
+   * RENDER: Left sidebar (desktop, hidden behind hamburger) + bottom tab bar (mobile)
+   * =======================================================================*/
+  function renderSidebar(acc) {
+    if (!state.sidebarOpen) return "";
+    var items = NAV_ITEMS.map(function (item) {
+      var active = !item.clickAction && state.activeTab === item.id;
+      var action = item.clickAction || "nav";
+      return (
+        '<button class="' + (active ? "active" : "") + '" data-action="' + action + '" data-id="' + item.id + '">' +
+          icon(item.icon, 17) + item.label +
+        "</button>"
+      );
+    }).join("");
+    return (
+      '<div class="sidebar-backdrop" data-action="close-sidebar"></div>' +
+      '<nav class="sidebar open">' +
+        '<div class="sidebar-head"><span class="who-chip"><span class="dot" style="background:' + acc.color + '"></span>' + acc.name + "</span>" +
+          '<button class="icon-btn" data-action="close-sidebar" aria-label="Zatvori">' + icon("x", 16) + "</button></div>" +
+        '<div class="sidebar-nav">' + items + "</div>" +
+      "</nav>"
+    );
+  }
+
+  function renderBottomNav() {
+    var items = NAV_ITEMS.map(function (item) {
+      if (item.clickAction) {
+        return '<button data-action="' + item.clickAction + '"><span class="fab">' + icon(item.icon, 20) + '</span><span class="fab-label">' + item.label + "</span></button>";
+      }
+      var active = state.activeTab === item.id;
+      return '<button class="' + (active ? "active" : "") + '" data-action="nav" data-id="' + item.id + '">' + icon(item.icon, 19) + "<span>" + item.label + "</span></button>";
+    }).join("");
+    return '<nav class="bottom-nav">' + items + "</nav>";
+  }
+
+  /* =========================================================================
+   * RENDER: Profile picker (odabir računa)
+   * =======================================================================*/
+  function renderProfilePicker() {
+    var options = ["matija", "matea"].map(function (id) {
+      var acc = state.accounts[id];
+      var status = acc.setup ? (acc.entries.length + " unosa") : "još nije postavljen";
+      return (
+        '<button class="picker-option" data-action="select-account" data-id="' + id + '">' +
+          '<div class="picker-avatar" style="background:' + acc.color + '">' + acc.name.charAt(0) + "</div>" +
+          '<div class="meta"><strong>' + acc.name + "</strong><span>" + status + "</span></div>" +
+        "</button>"
+      );
+    }).join("");
+    return (
+      '<div class="center-screen"><div class="center-card">' +
+        "<h1>Tko si ti?</h1><p class=\"sub\">Odaberi svoj račun za nastavak</p>" +
+        '<div class="picker-options">' + options + "</div>" +
+      "</div></div>"
+    );
+  }
+
+  /* =========================================================================
+   * RENDER: Setup wizard (prvi login)
+   * =======================================================================*/
+  function renderSetupWizard(acc) {
+    return (
+      '<div class="center-screen"><div class="center-card">' +
+        "<h1>Dobrodošao/la, " + acc.name + "</h1><p class=\"sub\">Prije nego krenemo, unesi početne podatke</p>" +
+        '<div class="wizard-card"><form id="setup-form">' +
+          '<div class="wizard-grid">' +
+            '<label class="field">Visina (cm)<input type="number" name="height" /></label>' +
+            '<label class="field">Trenutna kilaža (kg)<input type="text" inputmode="decimal" name="startWeight" /></label>' +
+            '<label class="field" style="grid-column: span 2">Željena kilaža (kg)<input type="text" inputmode="decimal" name="goalWeight" /></label>' +
+          "</div>" +
+          '<p class="wizard-section-label">Trenutna mjera (cm)</p>' +
+          '<div class="wizard-grid">' +
+            '<label class="field">Trbuh<input type="text" inputmode="decimal" name="trbuh" /></label>' +
+            '<label class="field">Grudi<input type="text" inputmode="decimal" name="grudi" /></label>' +
+            '<label class="field">Noge<input type="text" inputmode="decimal" name="noge" /></label>' +
+            '<label class="field">Ramena<input type="text" inputmode="decimal" name="ramena" /></label>' +
+          "</div>" +
+          (state.setupError ? '<p class="form-error">' + state.setupError + "</p>" : "") +
+          '<button type="submit" class="btn-primary" style="width:100%;margin-top:18px">Spremi i kreni</button>' +
+        "</form></div>" +
+      "</div></div>"
+    );
+  }
+
+  /* =========================================================================
+   * RENDER: Trend chart (ručno rađen SVG line chart, po odabranoj mjeri)
+   * =======================================================================*/
+  function renderTrendChart(acc) {
+    var metric = METRICS.filter(function (m) { return m.key === state.chartMetric; })[0];
+    var tabs = METRICS.map(function (m) {
+      return '<button class="' + (m.key === metric.key ? "active" : "") + '" data-action="chart-metric" data-id="' + m.key + '">' + m.label + "</button>";
+    }).join("");
+    var head = '<div class="chart-head"><h2 style="margin:0">Trend</h2><div class="metric-tabs">' + tabs + "</div></div>";
+
+    var points = sortedEntries(acc.entries).filter(function (e) { return e[metric.key] != null; });
+    if (points.length === 0) {
+      return '<section class="card">' + head + '<p class="chart-empty">Još nema podataka za ' + metric.label.toLowerCase() + ".</p></section>";
+    }
+
+    var dates = points.map(function (e) { return parseISO(e.date).getTime(); });
+    var minDate = Math.min.apply(null, dates), maxDate = Math.max.apply(null, dates);
+    if (minDate === maxDate) { minDate -= 86400000 * 3; maxDate += 86400000 * 3; }
+
+    var values = points.map(function (e) { return e[metric.key]; });
+    var minV = Math.min.apply(null, values), maxV = Math.max.apply(null, values);
+    var padV = Math.max((maxV - minV) * 0.2, metric.key === "weight" ? 1.5 : 1);
+    var yMin = Math.floor(minV - padV), yMax = Math.ceil(maxV + padV);
+    if (yMin === yMax) { yMin -= 1; yMax += 1; }
+
+    var W = 720, H = 260, padL = 34, padR = 10, padT = 10, padB = 26;
+    var innerW = W - padL - padR, innerH = H - padT - padB;
+    function xScale(t) { return padL + ((t - minDate) / (maxDate - minDate)) * innerW; }
+    function yScale(v) { return padT + (1 - (v - yMin) / (yMax - yMin)) * innerH; }
+
+    var yTicks = [];
+    for (var i = 0; i < 5; i++) yTicks.push(Math.round(yMin + (i * (yMax - yMin)) / 4));
+    var xTicks = [];
+    for (var j = 0; j < 6; j++) xTicks.push(minDate + (j * (maxDate - minDate)) / 5);
+
+    var svg = "";
+    yTicks.forEach(function (t) {
+      var y = yScale(t);
+      svg += '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y + '" stroke="var(--grid)" stroke-dasharray="3 3" stroke-width="1"/>';
+      svg += '<text x="' + (padL - 6) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="var(--text-muted)">' + t + "</text>";
+    });
+    xTicks.forEach(function (t) {
+      var x = xScale(t);
+      svg += '<text x="' + x + '" y="' + (H - 6) + '" text-anchor="middle" font-size="11" fill="var(--text-muted)">' + fmtShort(new Date(t).toISOString().slice(0, 10)) + "</text>";
+    });
+    svg += '<line x1="' + padL + '" y1="' + (H - padB) + '" x2="' + (W - padR) + '" y2="' + (H - padB) + '" stroke="var(--baseline)" stroke-width="1"/>';
+
+    var d = points.map(function (e, idx) {
+      var x = xScale(parseISO(e.date).getTime());
+      var y = yScale(e[metric.key]);
+      return (idx === 0 ? "M" : "L") + x.toFixed(1) + "," + y.toFixed(1);
+    }).join(" ");
+    svg += '<path d="' + d + '" fill="none" stroke="' + acc.color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+    points.forEach(function (e) {
+      var x = xScale(parseISO(e.date).getTime());
+      var y = yScale(e[metric.key]);
+      svg += '<circle class="chart-point" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="9" fill="transparent" ' +
+        'data-tooltip="1" data-date="' + e.date + '" data-value="' + e[metric.key] + '" data-unit="' + metric.unit + '" data-label="' + metric.label + '" data-color="' + acc.color + '"/>';
+      svg += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="3" fill="' + acc.color + '" pointer-events="none"/>';
+    });
+
+    return (
+      '<section class="card">' + head +
+        '<div class="chart-wrap" id="chart-wrap">' +
+          '<svg viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none">' + svg + "</svg>" +
+          '<div id="chart-tooltip"></div>' +
+        "</div>" +
+      "</section>"
+    );
+  }
+
+  /* =========================================================================
+   * RENDER: Novi unos — traka s gumbom
+   * =======================================================================*/
+  function renderNewEntryBar(acc) {
+    var last = sortedEntries(acc.entries).slice(-1)[0];
+    var lastText = last ? "Zadnji unos: " + fmtFull(last.date) : "Još nema unosa nakon početnog stanja.";
+    return (
+      '<section class="card new-entry-bar">' +
+        "<div><h2 style=\"margin:0 0 2px\">Novi unos</h2><p>" + lastText + "</p></div>" +
+        '<button class="btn-primary" data-action="open-new-entry">' + icon("plus", 16) + "Novi unos</button>" +
+      "</section>"
+    );
+  }
+
+  /* =========================================================================
+   * RENDER: Ciljevi
+   * =======================================================================*/
+  function renderGoals(acc) {
+    var stats = computeStats(acc.entries, acc.setup.goalWeight);
+    var body;
+    if (stats.count === 0) {
+      body = '<p class="muted">Nema podataka još.</p>';
+    } else {
+      var pct = stats.progressPct;
+      var barHtml = "", metaHtml = "", etaHtml = "";
+      if (acc.setup.goalWeight != null) {
+        barHtml = '<div class="progress-track"><div class="progress-fill" style="width:' + (pct || 0) + "%;background:" + acc.color + '"></div></div>';
+        var remainingText = stats.remaining != null ? (stats.remaining > 0 ? "Preostalo: " + stats.remaining.toFixed(1) + " kg" : "Cilj dosegnut 🎉") : "";
+        metaHtml = '<div class="goal-meta"><span>' + (pct != null ? pct.toFixed(0) + "%" : "—") + ' do cilja</span><span>' + remainingText + "</span></div>";
+        if (stats.etaWeeks != null) etaHtml = '<p class="goal-eta">Uz trenutni tempo, procjena je ~' + stats.etaWeeks + " " + (stats.etaWeeks === 1 ? "tjedan" : "tjedana") + " do cilja.</p>";
+      }
+      body =
+        '<div class="goal-top"><div><div class="goal-current">' + stats.current.toFixed(1) + " <small>kg trenutno</small></div>" +
+          '<p class="goal-start">Početna kilaža: ' + stats.start.toFixed(1) + " kg</p></div>" +
+          '<div class="goal-target">' + icon("target", 15) + (acc.setup.goalWeight != null ? acc.setup.goalWeight + " kg" : "—") + "</div></div>" +
+        barHtml + metaHtml + etaHtml;
+    }
+    return '<section class="card"><h2>Cilj</h2>' + body + "</section>";
+  }
+
+  /* =========================================================================
+   * RENDER: Statistika (BMI i dr.)
+   * =======================================================================*/
+  function changeValueHtml(value, judged) {
+    if (value == null) return '<span class="stat-value" style="color:var(--text-muted);font-size:13px">—</span>';
+    var isDown = value < 0, isFlat = value === 0;
+    var color = !judged ? "var(--text-secondary)" : (isFlat ? "var(--text-secondary)" : isDown ? "var(--good)" : "var(--critical)");
+    var ic = isFlat ? "minus" : isDown ? "down" : "up";
+    return '<span class="stat-value" style="color:' + color + '">' + icon(ic, 15) + Math.abs(value).toFixed(1) + "</span>";
+  }
+
+  function renderStats(acc) {
+    var stats = computeStats(acc.entries, acc.setup.goalWeight);
+    var body;
+    if (stats.count === 0) {
+      body = '<p class="muted">Nema podataka još.</p>';
+    } else {
+      var bmi = calcBMI(stats.current, acc.setup.height);
+      var cat = bmiCategory(bmi);
+      body =
+        '<div class="stats-grid">' +
+          '<div class="stat-tile"><p class="stat-label">BMI</p><span class="stat-value">' + (bmi ? bmi.toFixed(1) : "—") + '</span>' +
+            '<div class="status-line" style="color:' + STATUS_COLOR[cat.status] + '"><span class="status-dot" style="background:' + STATUS_COLOR[cat.status] + '"></span>' + cat.label + "</div></div>" +
+          '<div class="stat-tile"><p class="stat-label">Ukupna promjena</p>' + changeValueHtml(stats.totalChange, true) + " kg</div>" +
+          '<div class="stat-tile"><p class="stat-label">Prosjek / tjedan</p>' + changeValueHtml(stats.avgWeeklyChange, true) + " kg</div>" +
+          '<div class="stat-tile"><p class="stat-label">Najbolji tjedan</p>' + (stats.bestWeek ? changeValueHtml(stats.bestWeek.diff, true) + " kg" : '<span class="muted">nedovoljno podataka</span>') + "</div>" +
+        "</div>" +
+        '<p class="stats-count">' + stats.count + " " + (stats.count === 1 ? "unos" : "unosa") + " ukupno</p>";
+    }
+    return '<section class="card"><h2>Statistika kilaže</h2>' + body + "</section>";
+  }
+
+  /* =========================================================================
+   * RENDER: Mjere tijela
+   * =======================================================================*/
+  function renderMeasurements(acc) {
+    var keys = [
+      { key: "trbuh", label: "Trbuh" },
+      { key: "grudi", label: "Grudi" },
+      { key: "noge", label: "Noge" },
+      { key: "ramena", label: "Ramena" }
+    ];
+    var gm = acc.setup.goalMeasurements || {};
+    var tiles = keys.map(function (k) {
+      var d = measurementDelta(acc.entries, k.key);
+      var goalVal = gm[k.key];
+      var goalHtml = goalVal != null ? '<p class="muted" style="margin-top:3px">Cilj: ' + goalVal + " cm</p>" : "";
+      if (!d) {
+        return '<div class="stat-tile"><p class="stat-label">' + k.label + '</p><span class="stat-value" style="color:var(--text-muted);font-size:13px">—</span>' + goalHtml + "</div>";
+      }
+      var deltaHtml = d.delta === 0
+        ? '<span class="status-line">' + icon("minus", 13) + "bez promjene</span>"
+        : '<span class="status-line">' + icon(d.delta < 0 ? "down" : "up", 13) + Math.abs(d.delta).toFixed(1) + " cm od početka</span>";
+      return (
+        '<div class="stat-tile"><p class="stat-label">' + k.label + " (cm)</p>" +
+          '<span class="stat-value">' + d.last.toFixed(1) + "</span>" + deltaHtml + goalHtml +
+        "</div>"
+      );
+    }).join("");
+    return '<section class="card"><h2>Mjere tijela</h2><div class="grid-4">' + tiles + "</div></section>";
+  }
+
+  /* =========================================================================
+   * RENDER: Povijest unosa (read-only, immutable)
+   * =======================================================================*/
+  function renderHistory(acc) {
+    var rows = sortedEntries(acc.entries).slice().reverse();
+    var body;
+    if (rows.length === 0) {
+      body = '<p class="table-empty">Još nema unosa.</p>';
+    } else {
+      var trs = rows.map(function (e) {
+        return (
+          "<tr>" +
+            '<td class="tabular-nums">' + fmtFull(e.date) + "</td>" +
+            '<td class="row-weight tabular-nums">' + (e.weight != null ? e.weight.toFixed(1) + " kg" : "—") + "</td>" +
+            '<td class="tabular-nums">' + (e.trbuh != null ? e.trbuh.toFixed(1) : "—") + "</td>" +
+            '<td class="tabular-nums">' + (e.grudi != null ? e.grudi.toFixed(1) : "—") + "</td>" +
+            '<td class="tabular-nums">' + (e.noge != null ? e.noge.toFixed(1) : "—") + "</td>" +
+            '<td class="tabular-nums">' + (e.ramena != null ? e.ramena.toFixed(1) : "—") + "</td>" +
+          "</tr>"
+        );
+      }).join("");
+      body =
+        '<div class="table-scroll"><table class="history"><thead><tr><th>Datum</th><th>Kilaža</th><th>Trbuh</th><th>Grudi</th><th>Noge</th><th>Ramena</th></tr></thead><tbody>' +
+        trs + "</tbody></table></div>";
+    }
+    return (
+      '<section class="card"><h2>Povijest unosa</h2>' + body +
+        '<p class="lock-note">' + icon("lock", 12) + "Spremljeni unosi su trajni i ne mogu se mijenjati ni brisati.</p>" +
+      "</section>"
+    );
+  }
+
+  /* =========================================================================
+   * RENDER: Profil — info o računu + uređivanje ciljne kilaže/mjera i podataka
+   * =======================================================================*/
+  function renderProfilePage(acc) {
+    var stats = computeStats(acc.entries, acc.setup.goalWeight);
+    var gm = acc.setup.goalMeasurements || {};
+    return (
+      '<section class="card">' +
+        '<div class="profile-head"><div class="profile-avatar" style="background:' + acc.color + '">' + acc.name.charAt(0) + "</div>" +
+          "<div><strong>" + acc.name + "</strong><span>Postavljeno " + fmtFull(acc.setup.setupDate) + "</span></div></div>" +
+        '<div class="profile-meta">' +
+          '<div class="stat-tile"><p class="stat-label">Trenutna kilaža</p><span class="stat-value">' + (stats.current != null ? stats.current.toFixed(1) + " kg" : "—") + "</span></div>" +
+          '<div class="stat-tile"><p class="stat-label">Broj unosa</p><span class="stat-value">' + stats.count + "</span></div>" +
+        "</div>" +
+      "</section>" +
+      '<section class="card">' +
+        "<h2>Podaci i ciljevi</h2>" +
+        '<form id="profile-form">' +
+          '<div class="wizard-grid">' +
+            '<label class="field">Visina (cm)<input type="number" name="height" value="' + acc.setup.height + '" /></label>' +
+            '<label class="field">Ciljna kilaža (kg)<input type="text" inputmode="decimal" name="goalWeight" value="' + acc.setup.goalWeight + '" /></label>' +
+          "</div>" +
+          '<p class="wizard-section-label">Željena mjera (cm)</p>' +
+          '<div class="wizard-grid">' +
+            '<label class="field">Trbuh<input type="text" inputmode="decimal" name="goalTrbuh" value="' + (gm.trbuh != null ? gm.trbuh : "") + '" /></label>' +
+            '<label class="field">Grudi<input type="text" inputmode="decimal" name="goalGrudi" value="' + (gm.grudi != null ? gm.grudi : "") + '" /></label>' +
+            '<label class="field">Noge<input type="text" inputmode="decimal" name="goalNoge" value="' + (gm.noge != null ? gm.noge : "") + '" /></label>' +
+            '<label class="field">Ramena<input type="text" inputmode="decimal" name="goalRamena" value="' + (gm.ramena != null ? gm.ramena : "") + '" /></label>' +
+          "</div>" +
+          (state.profileError ? '<p class="form-error">' + state.profileError + "</p>" : "") +
+          '<button type="submit" class="btn-primary" style="width:100%;margin-top:16px">Spremi promjene</button>' +
+        "</form>" +
+      "</section>" +
+      '<section class="card" style="display:flex;flex-direction:column;gap:8px">' +
+        '<button class="btn-secondary" data-action="switch-user">' + icon("users", 15) + "Promijeni korisnika</button>" +
+        '<button class="btn-secondary btn-danger" data-action="reset-account">' + icon("rotate", 15) + "Resetiraj ovaj račun</button>" +
+      "</section>"
+    );
+  }
+
+  /* =========================================================================
+   * RENDER: Jelovnik — "Kreiraj jelo" (AI prijedlog recepta za dvoje)
+   * =======================================================================*/
+  function renderMealTab() {
+    var listHtml = "";
+    var detailHtml = "";
+
+    if (state.lastMeal) {
+      var m = state.lastMeal;
+      var d = m.dish;
+      detailHtml =
+        '<section class="card">' +
+          (state.mealOptions ? '<button class="btn-secondary" data-action="back-to-meal-options" style="margin-bottom:16px">← Natrag na popis jela</button>' : "") +
+          '<div class="dish-image">' + dishImageSVG(m.protein, m.prilog) + "</div>" +
+          "<h2 style=\"text-align:center\">" + d.name + "</h2>" +
+          '<p class="muted" style="margin:0 0 14px;text-align:center">' + proteinLabel(m.protein) + " + " + prilogLabel(m.prilog) + " — količine za 2 osobe</p>" +
+          '<div class="stats-grid" style="margin-bottom:16px">' +
+            '<div class="stat-tile"><p class="stat-label">Kalorije (po osobi)</p><span class="stat-value">' + d.kcal + " kcal</span></div>" +
+            '<div class="stat-tile"><p class="stat-label">Proteini (po osobi)</p><span class="stat-value">' + d.protein + " g</span></div>" +
+            '<div class="stat-tile"><p class="stat-label">Ugljikohidrati (po osobi)</p><span class="stat-value">' + d.carbs + " g</span></div>" +
+            '<div class="stat-tile"><p class="stat-label">Masti (po osobi)</p><span class="stat-value">' + d.fat + " g</span></div>" +
+          "</div>" +
+          '<p class="wizard-section-label" style="margin-top:0">Namirnice</p>' +
+          '<ul class="ingredient-list" style="margin-bottom:16px">' + d.ingredients.map(function (i) { return "<li>" + i + "</li>"; }).join("") + "</ul>" +
+          '<p class="wizard-section-label">Priprema</p>' +
+          '<ol class="steps-list">' + d.steps.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol>" +
+          '<p class="modal-note" style="margin-top:16px">Ilustracija i nutritivne vrijednosti su draft procjene (unaprijed pripremljene), ne stvarna AI generirana fotografija — ta funkcionalnost dolazi kad spojimo pravi backend.</p>' +
+        "</section>";
+    } else if (state.mealOptions && state.mealOptionsMeta) {
+      var meta = state.mealOptionsMeta;
+      var options = state.mealOptions.map(function (opt, idx) {
+        return (
+          '<button class="meal-option" data-action="select-dish" data-id="' + idx + '">' +
+            '<span class="thumb">' + dishImageSVG(meta.protein, meta.prilog) + "</span>" +
+            '<span class="meta"><strong>' + opt.name + '</strong><span>' + opt.kcal + " kcal · " + opt.protein + "P / " + opt.carbs + "UH / " + opt.fat + "M g (po osobi)</span></span>" +
+          "</button>"
+        );
+      }).join("");
+      listHtml =
+        '<section class="card">' +
+          "<h2>" + proteinLabel(meta.protein) + " + " + prilogLabel(meta.prilog) + " — odaberi jelo</h2>" +
+          '<p class="muted" style="margin:0 0 14px">10 prijedloga jela za ovu kombinaciju. Klikni na jelo za detaljan recept i postupak pripreme.</p>' +
+          '<div class="meal-option-list">' + options + "</div>" +
+        "</section>";
+    }
+
+    return (
+      '<section class="card">' +
+        "<h2>Kreiraj jelo</h2>" +
+        '<p class="muted" style="margin:0 0 14px">Odaberi meso i prilog — dobit ćeš 10 prijedloga jela; klikom na jedno dobiješ detaljan recept, izgled, postupak pripreme i kalorijske vrijednosti za dvoje.</p>' +
+        '<button class="btn-primary" data-action="open-meal-modal">' + icon("meal", 16) + "Kreiraj jelo</button>" +
+      "</section>" +
+      listHtml +
+      detailHtml
+    );
+  }
+
+  /* =========================================================================
+   * RENDER: Kalorije — dnevni unos hrane (Dashboard kartica)
+   * =======================================================================*/
+  function renderFoodLogCard(acc) {
+    var today = todayISO();
+    var todays = (acc.foodLog || []).filter(function (e) { return e.date === today; });
+    var totals = todays.reduce(function (t, e) {
+      t.kcal += e.kcal; t.protein += e.protein; t.carbs += e.carbs; t.fat += e.fat; t.salt += e.salt;
+      return t;
+    }, { kcal: 0, protein: 0, carbs: 0, fat: 0, salt: 0 });
+
+    var listHtml = todays.length
+      ? '<div class="food-log-list">' + todays.map(function (e) {
+          return '<div class="food-log-row"><span>' + e.time + "</span><span>" + e.kcal + " kcal · " + e.protein + "P / " + e.carbs + "UH / " + e.fat + "M g</span></div>";
+        }).join("") + "</div>"
+      : '<p class="muted" style="margin-top:10px">Još nema unosa hrane danas. Klikni + za dodavanje.</p>';
+
+    return (
+      '<section class="card">' +
+        "<h2>Dnevni unos hrane (danas)</h2>" +
+        '<div class="stats-grid">' +
+          '<div class="stat-tile"><p class="stat-label">Kalorije</p><span class="stat-value">' + totals.kcal + " kcal</span></div>" +
+          '<div class="stat-tile"><p class="stat-label">Proteini</p><span class="stat-value">' + totals.protein + " g</span></div>" +
+          '<div class="stat-tile"><p class="stat-label">Ugljikohidrati</p><span class="stat-value">' + totals.carbs + " g</span></div>" +
+          '<div class="stat-tile"><p class="stat-label">Masti</p><span class="stat-value">' + totals.fat.toFixed(0) + " g</span></div>" +
+        "</div>" +
+        '<p class="muted" style="margin-top:8px">Sol: ' + totals.salt.toFixed(1) + " g</p>" +
+        listHtml +
+      "</section>"
+    );
+  }
+
+  function renderCameraModal() {
+    if (!state.cameraModalOpen) return "";
+    var body;
+    if (state.cameraEstimate) {
+      var est = state.cameraEstimate;
+      body =
+        (state.cameraPhoto ? '<img class="camera-preview" src="' + state.cameraPhoto + '" alt="Fotografija tanjura" />' : "") +
+        '<div class="stats-grid" style="margin-bottom:10px">' +
+          '<div class="stat-tile"><p class="stat-label">Kalorije</p><span class="stat-value">' + est.kcal + " kcal</span></div>" +
+          '<div class="stat-tile"><p class="stat-label">Proteini</p><span class="stat-value">' + est.protein + " g</span></div>" +
+          '<div class="stat-tile"><p class="stat-label">Ugljikohidrati</p><span class="stat-value">' + est.carbs + " g</span></div>" +
+          '<div class="stat-tile"><p class="stat-label">Masti</p><span class="stat-value">' + est.fat + " g</span></div>" +
+        "</div>" +
+        '<p class="muted" style="margin-bottom:14px">Procijenjena sol: ' + est.salt + " g</p>" +
+        '<button class="btn-primary" style="width:100%;margin-bottom:8px" data-action="confirm-food-entry">' + icon("check", 16) + "Spremi u dnevni unos</button>" +
+        '<button class="btn-secondary" style="width:100%" data-action="retake-photo">' + icon("camera", 15) + "Slikaj ponovno</button>" +
+        '<p class="modal-note">AI procjena je draft simulacija (nasumične, ali realistične vrijednosti) — stvarna analiza fotografije dolazi kad spojimo pravi vision AI backend.</p>';
+    } else {
+      body =
+        '<label class="camera-drop" for="camera-file-input">' +
+          icon("camera", 28) +
+          '<span>Klikni za fotografiranje tanjura</span>' +
+        "</label>" +
+        '<input type="file" accept="image/*" capture="environment" id="camera-file-input" style="display:none" />';
+    }
+    return (
+      '<div class="modal-backdrop" data-action="close-camera">' +
+        '<div class="modal" data-action="noop">' +
+          '<div class="modal-head"><h2>Kalorije — slikaj tanjur</h2><button class="icon-btn" data-action="close-camera" aria-label="Zatvori">' + icon("x", 17) + "</button></div>" +
+          '<p class="modal-sub">AI procjenjuje kalorije i makronutrijente s fotografije</p>' +
+          body +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderMealModal() {
+    if (!state.mealModalOpen) return "";
+    var proteinBtns = PROTEINS.map(function (p) {
+      var active = state.mealForm.protein === p.key;
+      return '<button type="button" class="' + (active ? "active" : "") + '" data-action="meal-protein" data-id="' + p.key + '">' + p.label + "</button>";
+    }).join("");
+    var prilogBtns = PRILOZI.map(function (p) {
+      var active = state.mealForm.prilog === p.key;
+      return '<button type="button" class="' + (active ? "active" : "") + '" data-action="meal-prilog" data-id="' + p.key + '">' + p.label + "</button>";
+    }).join("");
+    return (
+      '<div class="modal-backdrop" data-action="close-meal-modal">' +
+        '<div class="modal" data-action="noop">' +
+          '<div class="modal-head"><h2>Kreiraj jelo</h2><button class="icon-btn" data-action="close-meal-modal" aria-label="Zatvori">' + icon("x", 17) + "</button></div>" +
+          '<p class="modal-sub">Odaberi meso i prilog za dvoje</p>' +
+          '<p class="wizard-section-label" style="margin-top:0">Meso</p>' +
+          '<div class="choice-pills">' + proteinBtns + "</div>" +
+          '<p class="wizard-section-label">Prilog</p>' +
+          '<div class="choice-pills">' + prilogBtns + "</div>" +
+          '<button class="btn-primary" style="width:100%;margin-top:18px" data-action="generate-meal">' + icon("check", 16) + "Prikaži 10 opcija jela</button>" +
+          '<p class="modal-note">Draft: 10 varijanti recepata po kombinaciji, generirano iz unaprijed pripremljene liste. Kad spojimo pravi AI backend, recepti će se generirati dinamički.</p>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  /* =========================================================================
+   * RENDER: Popup "Novi unos"
+   * =======================================================================*/
+  function renderNewEntryModal(acc) {
+    if (!state.newEntryOpen) return "";
+    return (
+      '<div class="modal-backdrop" data-action="close-new-entry">' +
+        '<div class="modal" data-action="noop">' +
+          '<div class="modal-head"><h2>Novi unos</h2><button class="icon-btn" data-action="close-new-entry" aria-label="Zatvori">' + icon("x", 17) + "</button></div>" +
+          '<p class="modal-sub">' + fmtFull(todayISO()) + " — " + acc.name + "</p>" +
+          '<form id="entry-form">' +
+            '<label class="field" style="margin-bottom:10px">Kilaža (kg)<input type="text" inputmode="decimal" name="weight" placeholder="npr. 82.4" /></label>' +
+            '<div class="modal-grid">' +
+              '<label class="field">Trbuh (cm)<input type="text" inputmode="decimal" name="trbuh" /></label>' +
+              '<label class="field">Grudi (cm)<input type="text" inputmode="decimal" name="grudi" /></label>' +
+              '<label class="field">Noge (cm)<input type="text" inputmode="decimal" name="noge" /></label>' +
+              '<label class="field">Ramena (cm)<input type="text" inputmode="decimal" name="ramena" /></label>' +
+            "</div>" +
+            (state.entryError ? '<p class="form-error">' + state.entryError + "</p>" : "") +
+            '<button type="submit" class="btn-primary" style="width:100%;margin-top:16px">' + icon("check", 16) + "Potvrdi unos</button>" +
+          "</form>" +
+          '<p class="modal-note">Nakon potvrde unos se sprema trajno i više se ne može mijenjati ni brisati.</p>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  /* =========================================================================
+   * APP RENDER
+   * =======================================================================*/
+  function renderTabContent(acc) {
+    if (state.activeTab === "povijest") {
+      return renderNewEntryBar(acc) + renderHistory(acc);
+    }
+    if (state.activeTab === "profil") {
+      return renderProfilePage(acc);
+    }
+    if (state.activeTab === "jelovnik") {
+      return renderMealTab();
+    }
+    // dashboard (default) — početna + trend zajedno
+    return (
+      renderTrendChart(acc) +
+      '<div class="grid-2">' + renderGoals(acc) + renderStats(acc) + "</div>" +
+      renderMeasurements(acc) +
+      renderFoodLogCard(acc)
+    );
+  }
+
+  function renderSyncScreen() {
+    if (state.syncError) {
+      return (
+        '<div class="sync-screen">' +
+          '<div class="sync-error">' + state.syncError + "</div>" +
+        "</div>"
+      );
+    }
+    return (
+      '<div class="sync-screen"><div class="sync-spinner"></div><p>Spajanje na bazu…</p></div>'
+    );
+  }
+
+  function renderSyncBadge() {
+    if (state.syncError) {
+      return '<div class="sync-badge"><span class="dot" style="background:var(--critical)"></span>Bez veze</div>';
+    }
+    return '<div class="sync-badge"><span class="dot" style="background:var(--good)"></span>Sinkronizirano</div>';
+  }
+
+  function render() {
+    try {
+      if (!state.syncReady) {
+        document.getElementById("app").innerHTML = renderHeader() + renderSyncScreen();
+        return;
+      }
+      var acc = currentAccount();
+      var body;
+      if (!acc) {
+        body = '<main>' + renderProfilePicker() + "</main>";
+      } else if (!acc.setup) {
+        body = '<main>' + renderSetupWizard(acc) + "</main>";
+      } else {
+        body =
+          renderSidebar(acc) +
+          '<main class="wrap with-bottom-nav">' + renderTabContent(acc) + "</main>" +
+          renderBottomNav() +
+          renderNewEntryModal(acc) +
+          renderMealModal() +
+          renderCameraModal();
+      }
+      document.getElementById("app").innerHTML = renderHeader() + body + renderSyncBadge();
+    } catch (err) {
+      // Sigurnosna mreža: umjesto tihog "ništa se ne događa", prikaži grešku
+      // da je odmah vidljivo što je pošlo po zlu (i meni i tebi kod testiranja).
+      if (window.console && console.error) console.error(err);
+      document.getElementById("app").innerHTML =
+        '<div style="padding:24px;font-family:ui-monospace,monospace;white-space:pre-wrap;color:#d03b3b;font-size:12px;line-height:1.5;">' +
+        "Greška u prikazu — javi ovo:\n\n" + (err && err.message ? err.message : String(err)) +
+        "</div>";
+    }
+  }
+
+  /* =========================================================================
+   * EVENTS
+   * =======================================================================*/
+  var app = document.getElementById("app");
+
+  app.addEventListener("submit", function (e) {
+    if (e.target && e.target.id === "setup-form") {
+      e.preventDefault();
+      var fd = new FormData(e.target);
+      var height = num(fd.get("height"));
+      var startWeight = num(fd.get("startWeight"));
+      var goalWeight = num(fd.get("goalWeight"));
+      if (!height || height < 100 || height > 250) { state.setupError = "Unesi ispravnu visinu (cm)."; render(); return; }
+      if (!startWeight || startWeight <= 0 || startWeight > 400) { state.setupError = "Unesi ispravnu trenutnu kilažu."; render(); return; }
+      if (!goalWeight || goalWeight <= 0 || goalWeight > 400) { state.setupError = "Unesi ispravnu željenu kilažu."; render(); return; }
+      state.setupError = "";
+
+      var acc = currentAccount();
+      var newSetup = { height: height, goalWeight: goalWeight, goalMeasurements: { trbuh: null, grudi: null, noge: null, ramena: null }, setupDate: todayISO() };
+      var firstEntry = {
+        id: uid(),
+        date: todayISO(),
+        weight: startWeight,
+        trbuh: num(fd.get("trbuh")),
+        grudi: num(fd.get("grudi")),
+        noge: num(fd.get("noge")),
+        ramena: num(fd.get("ramena"))
+      };
+      acc.setup = newSetup;
+      acc.entries.push(firstEntry);
+      saveAccount(acc.id, { setup: newSetup, entries: arrayUnion(firstEntry) });
+      render();
+    }
+    if (e.target && e.target.id === "entry-form") {
+      e.preventDefault();
+      var fd2 = new FormData(e.target);
+      var weight = num(fd2.get("weight"));
+      if (!weight || weight <= 0 || weight > 400) { state.entryError = "Unesi ispravnu kilažu (npr. 82.4)."; render(); return; }
+      state.entryError = "";
+      var acc2 = currentAccount();
+      var newEntry = {
+        id: uid(),
+        date: todayISO(),
+        weight: weight,
+        trbuh: num(fd2.get("trbuh")),
+        grudi: num(fd2.get("grudi")),
+        noge: num(fd2.get("noge")),
+        ramena: num(fd2.get("ramena"))
+      };
+      acc2.entries.push(newEntry);
+      saveAccount(acc2.id, { entries: arrayUnion(newEntry) });
+      state.newEntryOpen = false;
+      render();
+    }
+    if (e.target && e.target.id === "profile-form") {
+      e.preventDefault();
+      var fd3 = new FormData(e.target);
+      var height2 = num(fd3.get("height"));
+      var goalWeight2 = num(fd3.get("goalWeight"));
+      if (!height2 || height2 < 100 || height2 > 250) { state.profileError = "Unesi ispravnu visinu."; render(); return; }
+      if (!goalWeight2 || goalWeight2 <= 0 || goalWeight2 > 400) { state.profileError = "Unesi ispravnu ciljnu kilažu."; render(); return; }
+      state.profileError = "";
+      var acc3 = currentAccount();
+      acc3.setup.height = height2;
+      acc3.setup.goalWeight = goalWeight2;
+      acc3.setup.goalMeasurements = {
+        trbuh: num(fd3.get("goalTrbuh")),
+        grudi: num(fd3.get("goalGrudi")),
+        noge: num(fd3.get("goalNoge")),
+        ramena: num(fd3.get("goalRamena"))
+      };
+      saveAccount(acc3.id, { setup: acc3.setup });
+      render();
+    }
+  });
+
+  app.addEventListener("click", function (e) {
+    var actionEl = e.target.closest("[data-action]");
+    if (!actionEl) return;
+    var action = actionEl.getAttribute("data-action");
+    var id = actionEl.getAttribute("data-id");
+
+    if (action === "select-account") {
+      state.currentAccountId = id;
+      state.chartMetric = "weight";
+      state.activeTab = "dashboard";
+      render();
+    } else if (action === "toggle-sidebar") {
+      state.sidebarOpen = !state.sidebarOpen;
+      render();
+    } else if (action === "close-sidebar") {
+      state.sidebarOpen = false;
+      render();
+    } else if (action === "nav") {
+      state.activeTab = id;
+      state.sidebarOpen = false;
+      render();
+    } else if (action === "switch-user") {
+      state.currentAccountId = null;
+      state.sidebarOpen = false;
+      state.activeTab = "dashboard";
+      render();
+    } else if (action === "reset-account") {
+      if (!confirm("Resetirati ovaj račun (trajno briše setup i sve unose iz baze)?")) return;
+      var accId = state.currentAccountId;
+      var acc = state.accounts[accId];
+      state.accounts[accId] = { id: accId, name: acc.name, color: acc.color, setup: null, entries: [], foodLog: [] };
+      saveAccount(accId, { setup: null, entries: [], foodLog: [] });
+      state.sidebarOpen = false;
+      render();
+    } else if (action === "open-new-entry") {
+      state.entryError = "";
+      state.newEntryOpen = true;
+      state.sidebarOpen = false;
+      render();
+    } else if (action === "close-new-entry") {
+      state.newEntryOpen = false;
+      render();
+    } else if (action === "chart-metric") {
+      state.chartMetric = id;
+      render();
+    } else if (action === "open-meal-modal") {
+      state.mealModalOpen = true;
+      state.sidebarOpen = false;
+      render();
+    } else if (action === "close-meal-modal") {
+      state.mealModalOpen = false;
+      render();
+    } else if (action === "meal-protein") {
+      state.mealForm.protein = id;
+      render();
+    } else if (action === "meal-prilog") {
+      state.mealForm.prilog = id;
+      render();
+    } else if (action === "generate-meal") {
+      state.mealOptions = getMealOptions(state.mealForm.protein, state.mealForm.prilog);
+      state.mealOptionsMeta = { protein: state.mealForm.protein, prilog: state.mealForm.prilog };
+      state.lastMeal = null;
+      state.mealModalOpen = false;
+      render();
+    } else if (action === "select-dish") {
+      if (state.mealOptions && state.mealOptionsMeta) {
+        var dishIdx = parseInt(id, 10);
+        state.lastMeal = { protein: state.mealOptionsMeta.protein, prilog: state.mealOptionsMeta.prilog, dish: state.mealOptions[dishIdx] };
+      }
+      render();
+    } else if (action === "back-to-meal-options") {
+      state.lastMeal = null;
+      render();
+    } else if (action === "open-camera") {
+      state.cameraModalOpen = true;
+      state.cameraPhoto = null;
+      state.cameraEstimate = null;
+      state.sidebarOpen = false;
+      render();
+    } else if (action === "close-camera") {
+      state.cameraModalOpen = false;
+      render();
+    } else if (action === "retake-photo") {
+      state.cameraPhoto = null;
+      state.cameraEstimate = null;
+      render();
+    } else if (action === "confirm-food-entry") {
+      var accFood = currentAccount();
+      if (accFood && state.cameraEstimate) {
+        var now = new Date();
+        var e2 = state.cameraEstimate;
+        var newFoodEntry = {
+          id: uid(),
+          date: todayISO(),
+          time: (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes(),
+          kcal: e2.kcal, protein: e2.protein, carbs: e2.carbs, fat: e2.fat, salt: e2.salt
+        };
+        accFood.foodLog.push(newFoodEntry);
+        saveAccount(accFood.id, { foodLog: arrayUnion(newFoodEntry) });
+      }
+      state.cameraModalOpen = false;
+      state.cameraPhoto = null;
+      state.cameraEstimate = null;
+      render();
+    }
+  });
+
+  // Slikanje/odabir fotografije tanjura → simulirana AI procjena
+  app.addEventListener("change", function (e) {
+    if (!e.target || e.target.id !== "camera-file-input") return;
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+      state.cameraPhoto = ev.target.result;
+      state.cameraEstimate = simulateFoodAnalysis();
+      render();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Tooltip za graf
+  app.addEventListener("mouseover", function (e) {
+    var pt = e.target.closest && e.target.closest("[data-tooltip]");
+    if (!pt) return;
+    var wrap = document.getElementById("chart-wrap");
+    var tooltip = document.getElementById("chart-tooltip");
+    if (!wrap || !tooltip) return;
+    var rect = wrap.getBoundingClientRect();
+    var x = e.clientX - rect.left, y = e.clientY - rect.top;
+    tooltip.innerHTML =
+      '<div class="tt-date">' + fmtFull(pt.getAttribute("data-date")) + "</div>" +
+      '<div class="tt-row">' + pt.getAttribute("data-label") + ': <span class="tt-val">' +
+      Number(pt.getAttribute("data-value")).toFixed(1) + " " + pt.getAttribute("data-unit") + "</span></div>";
+    tooltip.style.display = "block";
+    tooltip.style.left = Math.min(x + 12, rect.width - 150) + "px";
+    tooltip.style.top = Math.max(y - 40, 0) + "px";
+  });
+  app.addEventListener("mouseout", function (e) {
+    var pt = e.target.closest && e.target.closest("[data-tooltip]");
+    if (!pt) return;
+    var tooltip = document.getElementById("chart-tooltip");
+    if (tooltip) tooltip.style.display = "none";
+  });
+
+  render();
+  initFirebaseSync();
+})();
+</script>
+</body>
+</html>
