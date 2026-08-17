@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>KilaTrack</title>
+<title>KGTracker</title>
 <meta name="theme-color" content="#2a78d6" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="apple-mobile-web-app-title" content="KilaTrack" />
+<meta name="apple-mobile-web-app-title" content="KGTracker" />
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEHElEQVR4nO3dUW4TSxCG0QSxGZINhhWwQsh2eLAUoci/cTzdPVUz5zwiXeOUvlT3TWzz/PL25wmu+bb3E6AucRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg+j73k+ghN+/flz989ef74ufSSk2B5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiInmf8kxrpVXfMM+MVjTYHkTiIxEEkDiJxEImDSBxEU37Ocdvtn4Ls8g7ECm+HLDgWm4NIHETiIFodx39/7XLO38vUHIvNQSQOoqVx3Lkbz3aylB2LzUG0cxyvP99P/rlbVxUZi81BtC6OLx2Z57l2VB6LzUG0Zxwfx2qF87WOOmOxOYgWxfHAYXmGa0fxsdgcRLvF8elA3f18LaLUWFbE8fAmPPbJUn8sjhWifeK4ui2dLNXGYnMQTY9j4wF51GtHi7HYHEQ7xHHjED3ztaPgWGwOorlxDDkaj3ft6DIWm4NodRz/PT7Pee2oOZaJcQzce0c6WRqNxbFCtDSOO3fj2U6WsmOxOYhmxTH8ODzGtaPXWGwOonVxfOnIPM+1o/JYpsQxadd1P1najcWxQrQojgf24RlOluJjsTmIxscx9WbQ99rRcSw2B9GKOB4+Jo997ag/FpuDaHAcC+4EHa8dTcdicxBNj2PjAXnUa0eLsYyMY9nC73Wy9B2LY4VobhxDtt/xTpYuY7E5iIbFsfge0OXa0XosNgfRxDgGHopHunY0GovNQTQmjl1uAPWvHd3HYnMQzYpj+HF4jGtHr7EMiGPH9V75ZDnAWBwrRFPimLTrup8s7cZicxBtjWP3U3/3J3DV7s9qyBOwOYjGxzH1ZtD32tFxLDYH0aY4dj9ZL4o8jQ9Fns/2p2FzED2/vP3Z/igfka65Ewz/69I32cbH7z6W70Me5fJsVq7TFjfT7mMZszm6m7Q5unPnIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg2jMi32uvh5i+Ish1vwtA3Ufi81BJA4icRCNiePqCTf2hbXtLhxP/cdicxDNjWPUd0mR95CN0mUsw+JIq2z7F9D6fQOtx7LiWNkyiIPtjH/VH8vIOG40+9gXc+O/arE2LvqOZcxPSO9x+ZLufPYHXhifVB7L+LdD3vkFbPnfvEZr40PHsUx5r+zUwDuWcdFuLJ0+anLqIy/QbixtPt560mMu1mss0z+CYcguPUAWn7QYS/V/V3bIIxTUYixLP7zlS98uh2ziqrJj2eeTfY7x063hqo3Fxz4R+ZU9kTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQfQXBKqCsRxJE+IAAAAASUVORK5CYII=" />
 <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEHElEQVR4nO3dUW4TSxCG0QSxGZINhhWwQsh2eLAUoci/cTzdPVUz5zwiXeOUvlT3TWzz/PL25wmu+bb3E6AucRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg+j73k+ghN+/flz989ef74ufSSk2B5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiInmf8kxrpVXfMM+MVjTYHkTiIxEEkDiJxEImDSBxEU37Ocdvtn4Ls8g7ECm+HLDgWm4NIHETiIFodx39/7XLO38vUHIvNQSQOoqVx3Lkbz3aylB2LzUG0cxyvP99P/rlbVxUZi81BtC6OLx2Z57l2VB6LzUG0Zxwfx2qF87WOOmOxOYgWxfHAYXmGa0fxsdgcRLvF8elA3f18LaLUWFbE8fAmPPbJUn8sjhWifeK4ui2dLNXGYnMQTY9j4wF51GtHi7HYHEQ7xHHjED3ztaPgWGwOorlxDDkaj3ft6DIWm4NodRz/PT7Pee2oOZaJcQzce0c6WRqNxbFCtDSOO3fj2U6WsmOxOYhmxTH8ODzGtaPXWGwOonVxfOnIPM+1o/JYpsQxadd1P1najcWxQrQojgf24RlOluJjsTmIxscx9WbQ99rRcSw2B9GKOB4+Jo997ag/FpuDaHAcC+4EHa8dTcdicxBNj2PjAXnUa0eLsYyMY9nC73Wy9B2LY4VobhxDtt/xTpYuY7E5iIbFsfge0OXa0XosNgfRxDgGHopHunY0GovNQTQmjl1uAPWvHd3HYnMQzYpj+HF4jGtHr7EMiGPH9V75ZDnAWBwrRFPimLTrup8s7cZicxBtjWP3U3/3J3DV7s9qyBOwOYjGxzH1ZtD32tFxLDYH0aY4dj9ZL4o8jQ9Fns/2p2FzED2/vP3Z/igfka65Ewz/69I32cbH7z6W70Me5fJsVq7TFjfT7mMZszm6m7Q5unPnIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg2jMi32uvh5i+Ish1vwtA3Ufi81BJA4icRCNiePqCTf2hbXtLhxP/cdicxDNjWPUd0mR95CN0mUsw+JIq2z7F9D6fQOtx7LiWNkyiIPtjH/VH8vIOG40+9gXc+O/arE2LvqOZcxPSO9x+ZLufPYHXhifVB7L+LdD3vkFbPnfvEZr40PHsUx5r+zUwDuWcdFuLJ0+anLqIy/QbixtPt560mMu1mss0z+CYcguPUAWn7QYS/V/V3bIIxTUYixLP7zlS98uh2ziqrJj2eeTfY7x063hqo3Fxz4R+ZU9kTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQfQXBKqCsRxJE+IAAAAASUVORK5CYII=" />
 <style>
@@ -46,8 +46,12 @@
     position: sticky; top: 0; z-index: 10;
     background: rgba(252,252,251,0.92); backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--border);
+    padding-top: env(safe-area-inset-top);
   }
-  .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px max(16px, env(safe-area-inset-right)) 14px max(16px, env(safe-area-inset-left));
+  }
   .brand { display: flex; align-items: center; gap: 10px; }
   .brand-badge {
     width: 36px; height: 36px; border-radius: 10px; background: var(--series-matija);
@@ -296,8 +300,11 @@
   .sync-spinner { width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--grid); border-top-color: var(--series-matija); animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .sync-error { color: var(--critical); font-size: 12px; background: var(--page); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; max-width: 360px; }
-  .sync-badge { position: fixed; bottom: 8px; right: 8px; font-size: 10.5px; color: var(--text-muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 3px 9px; z-index: 30; display: flex; align-items: center; gap: 5px; }
+  .sync-badge { position: fixed; bottom: calc(8px + env(safe-area-inset-bottom)); right: max(8px, env(safe-area-inset-right)); font-size: 10.5px; color: var(--text-muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 3px 9px; z-index: 30; display: flex; align-items: center; gap: 5px; }
   .sync-badge .dot { width: 6px; height: 6px; border-radius: 50%; }
+  @media (max-width: 767px) {
+    .sync-badge { bottom: calc(60px + env(safe-area-inset-bottom) + 10px); }
+  }
 </style>
 </head>
 <body>
@@ -941,7 +948,7 @@
         '<div class="brand">' +
           left +
           '<div class="brand-badge">' + icon("scale", 18) + "</div>" +
-          '<div><h1>KilaTrack</h1><p>Zajedničko praćenje napretka</p></div>' +
+          '<div><h1>KGTracker</h1><p>Zajedničko praćenje napretka</p></div>' +
         "</div>" +
         right +
       "</div></header>"
